@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "craftycuisine",
+  "version": "b1.0",
+  "name": "Crafty Cuisine",
+  "description": "Adds food centered around expanding the vanilla options.",
+  "authors": ["RandomMcSomethin.com"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/craftycuisine/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "craftycuisine.craftycuisine.client.CraftyCuisineClient"
+    ],
+    "main": [
+      "craftycuisine.craftycuisine.CraftyCuisine"
+    ],
+    "modmenu": [ "craftycuisine.craftycuisine.CraftyCuisineMenu" ]
+
+  },
+  "mixins": [
+    "craftycuisine.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.6+build.214",
+    "fabric": "*",
+    "minecraft": "1.16.3"
+  }
+}

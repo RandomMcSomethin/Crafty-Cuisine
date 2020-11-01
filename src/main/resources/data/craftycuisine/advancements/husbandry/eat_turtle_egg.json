@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:turtle_egg"
+    },
+    "title": {
+      "translate": "advancements.craftycuisine.turtle_egg.title"
+    },
+    "description": {
+      "translate": "advancements.craftycuisine.turtle_egg.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "apple": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "craftycuisine:cooked_turtle_egg"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "minecraft:spider_eye"
+  },
+  "result": "craftycuisine:cooked_spider_eye",
+  "experience": 0.35,
+  "cookingtime": 100
+}
