@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "craftycuisine:item/candied_chorus_fruit"
+  }
+}

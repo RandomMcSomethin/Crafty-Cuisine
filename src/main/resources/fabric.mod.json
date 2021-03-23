@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "craftycuisine",
-  "version": "b1.1",
+  "version": "b1.2.1",
   "name": "Crafty Cuisine",
   "description": "Adds food centered around expanding the vanilla options.",
-  "authors": ["RandomMcSomethin.com"],
+  "authors": ["RandomMcSomethin"],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/crafty-cuisine-fabric",
     "sources": "https://github.com/RandomMcSomethin/Crafty-Cuisine",
