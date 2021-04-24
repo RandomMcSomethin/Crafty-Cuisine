@@ -15,11 +15,11 @@ import java.util.Random;
 
 public class CraftyCuisine implements ModInitializer {
 
-    public static final FoodComponent COOKED_CARROT_FOOD = new FoodComponent.Builder().hunger(4).saturationModifier(4).build();
-    public static final FoodComponent SWEET_BERRY_JAM_FOOD = new FoodComponent.Builder().hunger(2).saturationModifier(3).build();
-    public static final FoodComponent CANDIED_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(6).build();
-    public static final FoodComponent BIG_COOKIE_FOOD = new FoodComponent.Builder().hunger(3).saturationModifier(1.2F).build();
-    public static final FoodComponent COOKED_BACON_FOOD = new FoodComponent.Builder().hunger(4).saturationModifier(3.2F).build();
+    public static final FoodComponent COOKED_CARROT_FOOD = new FoodComponent.Builder().hunger(4).saturationModifier(1).build();
+    public static final FoodComponent SWEET_BERRY_JAM_FOOD = new FoodComponent.Builder().hunger(2).saturationModifier(1.5F).build();
+    public static final FoodComponent CANDIED_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(1).build();
+    public static final FoodComponent BIG_COOKIE_FOOD = new FoodComponent.Builder().hunger(3).saturationModifier(0.4F).build();
+    public static final FoodComponent COOKED_BACON_FOOD = new FoodComponent.Builder().hunger(4).saturationModifier(0.8F).build();
 
     public static final Item COOKED_CARROT = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(COOKED_CARROT_FOOD));
     public static final Item COOKED_EGG = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.POTATO));
