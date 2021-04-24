@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "craftycuisine:crimson_fungus_stew"
+    ]
+  },
+  "criteria": {
+    "has_crimson_fungus": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:crimson_fungus"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "craftycuisine:crimson_fungus_stew"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_crimson_fungus",
+      "has_the_recipe"
+    ]
+  ]
+}
