@@ -16,13 +16,20 @@
     "hidden": false
   },
   "criteria": {
-    "apple": {
+    "ate_turt_egg": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "item": "craftycuisine:cooked_turtle_egg"
+          "items": [
+            "craftycuisine:cooked_turtle_egg"
+          ]
         }
       }
     }
-  }
+  },
+  "requirements": [
+    [
+      "ate_turt_egg"
+    ]
+  ]
 }

@@ -1,6 +1,10 @@
 plugins {
-    id 'fabric-loom' version '0.5-SNAPSHOT'
+    id 'fabric-loom' version '0.11-SNAPSHOT'
     id 'maven-publish'
+}
+
+repositories {
+    maven { url 'https://maven.terraformersmc.com' }
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -15,8 +19,8 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-    modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+/*
+    modImplementation "com:terraformersmc:modmenu:${project.modmenu_version}"
 
     modApi("me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"){
         exclude(group: "net.fabricmc.fabric-api")
@@ -26,7 +30,7 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     include "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
-
+    */
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
@@ -38,13 +42,8 @@ dependencies {
 processResources {
     inputs.property "version", project.version
 
-    from(sourceSets.main.resources.srcDirs) {
-        include "fabric.mod.json"
+    filesMatching("fabric.mod.json") {
         expand "version": project.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "fabric.mod.json"
     }
 }
 

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "craftycuisine:glow_berry_bread"
+    ]
+  },
+  "criteria": {
+    "has_glow_berry_jam": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "craftycuisine:glow_berry_jam"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "craftycuisine:glow_berry_bread"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_glow_berry_jam",
+      "has_the_recipe"
+    ]
+  ]
+}

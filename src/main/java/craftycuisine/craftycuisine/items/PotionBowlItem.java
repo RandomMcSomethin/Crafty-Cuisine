@@ -7,10 +7,10 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.MushroomStewItem;
+import net.minecraft.item.StewItem;
 import net.minecraft.world.World;
 
-public class PotionBowlItem extends MushroomStewItem {
+public class PotionBowlItem extends StewItem {
 
     StatusEffect effect;
 
@@ -25,6 +25,6 @@ public class PotionBowlItem extends MushroomStewItem {
         if (!world.isClient) {
             user.addStatusEffect(new StatusEffectInstance(effect, 600));
         }
-        return user instanceof PlayerEntity && ((PlayerEntity)user).abilities.creativeMode ? itemStack : new ItemStack(Items.BOWL);
+        return user instanceof PlayerEntity && ((PlayerEntity)user).getAbilities().creativeMode ? itemStack : new ItemStack(Items.BOWL);
     }
 }

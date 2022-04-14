@@ -2,10 +2,12 @@ package craftycuisine.craftycuisine;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonListWidget;
-import net.minecraft.client.options.Option;
+//import net.minecraft.client.options.Option;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
+//import org.jetbrains.annotations.Nullable;
 
 public class CraftyCuisineSettings extends Screen {
 
@@ -22,4 +24,5 @@ public class CraftyCuisineSettings extends Screen {
         super(new TranslatableText("craftycuisine.menu.title"));
         
     }
+
 }

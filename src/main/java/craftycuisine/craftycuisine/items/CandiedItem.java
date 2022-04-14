@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class CandiedItem extends PoisonCureItem {
     public CandiedItem(FabricItemSettings food) {
-        super(food);
+        super(food, false);
     }
 
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
@@ -21,10 +21,10 @@ public class CandiedItem extends PoisonCureItem {
         if (stack.isEmpty()) {
             return new ItemStack(Items.STICK);
         } else {
-            if (user instanceof PlayerEntity && !((PlayerEntity)user).abilities.creativeMode) {
+            if (user instanceof PlayerEntity && !((PlayerEntity)user).getAbilities().creativeMode) {
                 ItemStack itemStack = new ItemStack(Items.STICK);
                 PlayerEntity playerEntity = (PlayerEntity)user;
-                if (!playerEntity.inventory.insertStack(itemStack)) {
+                if (!playerEntity.getInventory().insertStack(itemStack)) {
                     playerEntity.dropItem(itemStack, false);
                 }
             }
