@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:cookie",
+    "craftycuisine:sugar_cookie",
+    "craftycuisine:pumpkin_cookie",
+    "craftycuisine:bacon",
+    "craftycuisine:cooked_bacon"
+  ]
+}
