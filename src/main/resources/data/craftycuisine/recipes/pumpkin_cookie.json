@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " X ",
     "#P#"
   ],
   "key": {
@@ -10,13 +9,10 @@
     },
     "P": {
       "item": "minecraft:pumpkin"
-    },
-    "X": {
-      "item": "minecraft:sugar"
     }
   },
   "result": {
     "item": "craftycuisine:pumpkin_cookie",
-    "count": 4
+    "count": 3
   }
 }

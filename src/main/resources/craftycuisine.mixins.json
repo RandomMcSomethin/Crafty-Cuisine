@@ -4,7 +4,8 @@
   "package": "craftycuisine.craftycuisine.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "FoodComponentAccessor"
+    "FoodComponentAccessor",
+    "CrackParticleMixin"
   ],
   "client": [
   ],
