@@ -13,29 +13,30 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.RegistryEntryList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Type;
 import java.util.Objects;
-import java.util.Optional;
 
 public class CraftyCuisine implements ModInitializer {
     public static final String mod_id = "craftycuisine";
     public static final Logger LOGGER = LoggerFactory.getLogger(mod_id);
 
     // tags
-    //public static final TagKey<Item> FAST_FOOD = TagKey.of(Registry.ITEM_KEY, new Identifier(mod_id, "fast_food"));
+    //public static final TagKey<Item> FAST_FOOD = TagKey.of(Registries.ITEM_KEY, new Identifier(mod_id, "fast_food"));
 
     // food components
     public static final FoodComponent COOKED_CARROT_FOOD = new FoodComponent.Builder().hunger(4).saturationModifier(1).build();
@@ -102,147 +103,290 @@ public class CraftyCuisine implements ModInitializer {
             .build();
 
     // items
-    public static final Item COOKIE_CUTTER_SQUARE = new Item(new FabricItemSettings().group(ItemGroup.MISC));
-    public static final Item COOKIE_CUTTER_STAR = new Item(new FabricItemSettings().group(ItemGroup.MISC));
-    public static final Item COOKIE_CUTTER_TREE = new Item(new FabricItemSettings().group(ItemGroup.MISC));
-    public static final Item COOKIE_CUTTER_CREEPER = new Item(new FabricItemSettings().group(ItemGroup.MISC));
 
-    public static final Item COOKED_CARROT = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(COOKED_CARROT_FOOD));
-    public static final Item COOKED_EGG = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.POTATO));
-    public static final Item COOKED_TURTLE_EGG = new CookedTurtleEggItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.GOLDEN_CARROT));
+    // cookie cutters
+    public static final Item COOKIE_CUTTER_SQUARE = new Item(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_STAR = new Item(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_TREE = new Item(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_CREEPER = new Item(new FabricItemSettings());
 
-    public static final Item APPLE_PIE = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.PUMPKIN_PIE));
-    public static final Item CHOCOLATE_PIE = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.PUMPKIN_PIE));
-    public static final Item CHORUS_PIE = new ChorusFruitItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.PUMPKIN_PIE));
-    public static final Item MELON_PIE = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.PUMPKIN_PIE));
-    public static final Item SWEET_BERRY_PIE = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.PUMPKIN_PIE));
-    public static final Item GLOW_BERRY_PIE = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.PUMPKIN_PIE));
-    public static final Item SHEPHERDS_PIE = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(SHEPHERDS_PIE_FOOD));
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> entries.addBefore(Items.EXPERIENCE_BOTTLE.getDefaultStack(),
+                new Item[]{
+                        COOKIE_CUTTER_SQUARE,
+                        COOKIE_CUTTER_STAR,
+                        COOKIE_CUTTER_TREE,
+                        COOKIE_CUTTER_CREEPER
+            }
+        ));
+    }
 
-    public static final Item SWEET_BERRY_JAM = new DrinkableItem(new FabricItemSettings().group(ItemGroup.FOOD).food(SWEET_BERRY_JAM_FOOD).recipeRemainder(Items.GLASS_BOTTLE));
-    public static final Item GLOW_BERRY_JAM = new DrinkableItem(new FabricItemSettings().group(ItemGroup.FOOD).food(GLOW_BERRY_JAM_FOOD).recipeRemainder(Items.GLASS_BOTTLE));
-    public static final Item SWEET_BERRY_BREAD = new PoisonCureItem(new FabricItemSettings().group(ItemGroup.FOOD).food(SWEET_BERRY_BREAD_FOOD));
-    public static final Item GLOW_BERRY_BREAD = new PoisonCureItem(new FabricItemSettings().group(ItemGroup.FOOD).food(GLOW_BERRY_BREAD_FOOD));
-    public static final Item HONEY_BREAD = new PoisonCureItem(new FabricItemSettings().group(ItemGroup.FOOD).food(HONEY_BREAD_FOOD));
+    // basic cooked foods
+    public static final Item COOKED_CARROT = new Item(new FabricItemSettings().food(COOKED_CARROT_FOOD));
+    public static final Item COOKED_EGG = new Item(new FabricItemSettings().food(FoodComponents.POTATO));
+    public static final Item COOKED_TURTLE_EGG = new CookedTurtleEggItem(new FabricItemSettings().food(FoodComponents.GOLDEN_CARROT));
 
-    public static final Item CANDIED_APPLE = new CandiedItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CANDIED_FOOD));
-    public static final Item CANDIED_CHORUS_FRUIT = new ChorusFruitItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CANDIED_FOOD));
-    public static final Item CANDIED_MELON_SLICE = new CandiedItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CANDIED_FOOD));
-    public static final Item SWEET_BERRY_CANDY = new DrinkableItem(new FabricItemSettings().group(ItemGroup.FOOD).food(SWEET_BERRY_CANDY_FOOD).recipeRemainder(Items.GLASS_BOTTLE));
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.CARROT.getDefaultStack(), COOKED_CARROT));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addBefore(Items.BEETROOT.getDefaultStack(),
+                new Item[]{
+                        COOKED_EGG,
+                        COOKED_TURTLE_EGG
+                }
+        ));
+    }
 
-    public static final Item SUSHI = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(SUSHI_FOOD));
-    public static final Item SALMON_CAKES = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(SALMON_CAKES_FOOD));
+    // pies
+    public static final Item APPLE_PIE = new Item(new FabricItemSettings().food(FoodComponents.PUMPKIN_PIE));
+    public static final Item CHOCOLATE_PIE = new Item(new FabricItemSettings().food(FoodComponents.PUMPKIN_PIE));
+    public static final Item CHORUS_PIE = new ChorusFruitItem(new FabricItemSettings().food(FoodComponents.PUMPKIN_PIE));
+    public static final Item MELON_PIE = new Item(new FabricItemSettings().food(FoodComponents.PUMPKIN_PIE));
+    public static final Item SWEET_BERRY_PIE = new Item(new FabricItemSettings().food(FoodComponents.PUMPKIN_PIE));
+    public static final Item GLOW_BERRY_PIE = new Item(new FabricItemSettings().food(FoodComponents.PUMPKIN_PIE));
+    public static final Item SHEPHERDS_PIE = new Item(new FabricItemSettings().food(SHEPHERDS_PIE_FOOD));
 
-    public static final Item SUGAR_COOKIE = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.COOKIE));
-    public static final Item FROSTED_SUGAR_COOKIE = new DyeableCookieItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FROSTED_COOKIE_FOOD), "");
-    public static final Item SUGAR_COOKIE_SQUARE = new TooltipItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_square_tooltip");
-    public static final Item FROSTED_SUGAR_COOKIE_SQUARE = new DyeableCookieItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_square_tooltip");
-    public static final Item SUGAR_COOKIE_STAR = new TooltipItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_star_tooltip");
-    public static final Item FROSTED_SUGAR_COOKIE_STAR = new DyeableCookieItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_star_tooltip");
-    public static final Item SUGAR_COOKIE_TREE = new TooltipItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_tree_tooltip");
-    public static final Item FROSTED_SUGAR_COOKIE_TREE = new DyeableCookieItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_tree_tooltip");
-    public static final Item SUGAR_COOKIE_CREEPER = new TooltipItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_creeper_tooltip");
-    public static final Item FROSTED_SUGAR_COOKIE_CREEPER = new DyeableCookieItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_creeper_tooltip");
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.COOKED_MUTTON.getDefaultStack(), SHEPHERDS_PIE));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.PUMPKIN_PIE.getDefaultStack(),
+                new Item[]{
+                        APPLE_PIE,
+                        CHOCOLATE_PIE,
+                        CHORUS_PIE,
+                        MELON_PIE,
+                        SWEET_BERRY_PIE,
+                        GLOW_BERRY_PIE
+                }
+        ));
+    }
 
-    public static final Item PUMPKIN_COOKIE = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(BIG_COOKIE_FOOD));
-    public static final Item FROSTED_PUMPKIN_COOKIE = new DyeableCookieItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FROSTED_BIG_COOKIE_FOOD), "");
+    // jams and bread
+    public static final Item SWEET_BERRY_JAM = new DrinkableItem(new FabricItemSettings().food(SWEET_BERRY_JAM_FOOD).recipeRemainder(Items.GLASS_BOTTLE));
+    public static final Item GLOW_BERRY_JAM = new DrinkableItem(new FabricItemSettings().food(GLOW_BERRY_JAM_FOOD).recipeRemainder(Items.GLASS_BOTTLE));
+    public static final Item SWEET_BERRY_BREAD = new PoisonCureItem(new FabricItemSettings().food(SWEET_BERRY_BREAD_FOOD));
+    public static final Item GLOW_BERRY_BREAD = new PoisonCureItem(new FabricItemSettings().food(GLOW_BERRY_BREAD_FOOD));
+    public static final Item HONEY_BREAD = new PoisonCureItem(new FabricItemSettings().food(HONEY_BREAD_FOOD));
 
-    public static final Item COOKED_SPIDER_EYE = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(COOKED_SPIDER_EYE_FOOD));
-    public static final Item MONSTER_MEATBALLS = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(MONSTER_MEATBALLS_FOOD).maxCount(1));
-    public static final Item MONSTER_MANICOTTI = new MonsterManicottiItem(new FabricItemSettings().group(ItemGroup.FOOD).food(MONSTER_MANICOTTI_FOOD));
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.BREAD.getDefaultStack(),
+                new Item[]{
+                        SWEET_BERRY_BREAD,
+                        GLOW_BERRY_BREAD,
+                        HONEY_BREAD
+                }
+        ));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.HONEY_BOTTLE.getDefaultStack(),
+                new Item[]{
+                        SWEET_BERRY_JAM,
+                        GLOW_BERRY_JAM
+                }
+        ));
 
-    public static final Item CHOCOLATE_PUDDING = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CHOCOLATE_PUDDING_FOOD).maxCount(1));
-    public static final Item CACTUS_SOUP = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CACTUS_SOUP_FOOD).maxCount(1));
-    public static final Item CRIMSON_STEW = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CRIMSON_STEW_FOOD).maxCount(1));
-    public static final Item WARPED_STEW = new RandomPotionBowlItem(new FabricItemSettings().group(ItemGroup.FOOD).food(WARPED_STEW_FOOD).maxCount(1));
-    public static final Item GLOW_RAMEN = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(GLOW_RAMEN_FOOD).maxCount(1));
-    public static final Item ROOT_RISOTTO = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(ROOT_RISOTTO_FOOD).maxCount(1));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> entries.addAfter(Items.WHEAT.getDefaultStack(),
+                new Item[]{
+                        SWEET_BERRY_JAM,
+                        GLOW_BERRY_JAM
+                }
+        ));
+    }
 
-    public static final Item BACON = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(BACON_FOOD));
-    public static final Item COOKED_BACON = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(COOKED_BACON_FOOD));
+    // candy
+    public static final Item CANDIED_APPLE = new CandiedItem(new FabricItemSettings().food(CANDIED_FOOD));
+    public static final Item CANDIED_CHORUS_FRUIT = new ChorusFruitItem(new FabricItemSettings().food(CANDIED_FOOD));
+    public static final Item CANDIED_MELON_SLICE = new CandiedItem(new FabricItemSettings().food(CANDIED_FOOD));
+    public static final Item SWEET_BERRY_CANDY = new DrinkableItem(new FabricItemSettings().food(SWEET_BERRY_CANDY_FOOD).recipeRemainder(Items.GLASS_BOTTLE));
+
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addBefore(Items.COOKIE.getDefaultStack(),
+                new Item[]{
+                        CANDIED_APPLE,
+                        CANDIED_CHORUS_FRUIT,
+                        CANDIED_MELON_SLICE,
+                        SWEET_BERRY_CANDY
+                }
+        ));
+    }
+
+    // fish
+    public static final Item SUSHI = new Item(new FabricItemSettings().food(SUSHI_FOOD));
+    public static final Item SALMON_CAKES = new Item(new FabricItemSettings().food(SALMON_CAKES_FOOD));
+
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.PUFFERFISH.getDefaultStack(), SUSHI));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.COOKED_SALMON.getDefaultStack(), SALMON_CAKES));
+    }
+
+    // cookies
+    public static final Item SUGAR_COOKIE = new Item(new FabricItemSettings().food(FoodComponents.COOKIE));
+    public static final Item FROSTED_SUGAR_COOKIE = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "");
+    public static final Item SUGAR_COOKIE_SQUARE = new TooltipItem(new FabricItemSettings().food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_square_tooltip");
+    public static final Item FROSTED_SUGAR_COOKIE_SQUARE = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_square_tooltip");
+    public static final Item SUGAR_COOKIE_STAR = new TooltipItem(new FabricItemSettings().food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_star_tooltip");
+    public static final Item FROSTED_SUGAR_COOKIE_STAR = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_star_tooltip");
+    public static final Item SUGAR_COOKIE_TREE = new TooltipItem(new FabricItemSettings().food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_tree_tooltip");
+    public static final Item FROSTED_SUGAR_COOKIE_TREE = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_tree_tooltip");
+    public static final Item SUGAR_COOKIE_CREEPER = new TooltipItem(new FabricItemSettings().food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_creeper_tooltip");
+    public static final Item FROSTED_SUGAR_COOKIE_CREEPER = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_creeper_tooltip");
+
+    public static final Item PUMPKIN_COOKIE = new Item(new FabricItemSettings().food(BIG_COOKIE_FOOD));
+    public static final Item FROSTED_PUMPKIN_COOKIE = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_BIG_COOKIE_FOOD), "");
+
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.COOKIE.getDefaultStack(),
+                new Item[]{
+                        SUGAR_COOKIE,
+                        FROSTED_SUGAR_COOKIE,
+                        SUGAR_COOKIE_SQUARE,
+                        FROSTED_SUGAR_COOKIE_SQUARE,
+                        SUGAR_COOKIE_SQUARE,
+                        SUGAR_COOKIE_STAR,
+                        FROSTED_SUGAR_COOKIE_STAR,
+                        SUGAR_COOKIE_TREE,
+                        FROSTED_SUGAR_COOKIE_TREE,
+                        SUGAR_COOKIE_CREEPER,
+                        PUMPKIN_COOKIE,
+                        FROSTED_PUMPKIN_COOKIE
+                }
+        ));
+    }
+
+    // monster
+    public static final Item COOKED_SPIDER_EYE = new Item(new FabricItemSettings().food(COOKED_SPIDER_EYE_FOOD));
+    public static final Item MONSTER_MEATBALLS = new StewItem(new FabricItemSettings().food(MONSTER_MEATBALLS_FOOD).maxCount(1));
+    public static final Item MONSTER_MANICOTTI = new MonsterManicottiItem(new FabricItemSettings().food(MONSTER_MANICOTTI_FOOD));
+
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.SPIDER_EYE.getDefaultStack(),
+                new Item[]{
+                        COOKED_SPIDER_EYE,
+                        MONSTER_MEATBALLS,
+                        MONSTER_MANICOTTI
+                }
+        ));
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> entries.addBefore(Items.HONEYCOMB.getDefaultStack(), COOKED_SPIDER_EYE));
+    }
+
+    // soups and stews
+    public static final Item CHOCOLATE_PUDDING = new StewItem(new FabricItemSettings().food(CHOCOLATE_PUDDING_FOOD).maxCount(1));
+    public static final Item CACTUS_SOUP = new StewItem(new FabricItemSettings().food(CACTUS_SOUP_FOOD).maxCount(1));
+    public static final Item CRIMSON_STEW = new StewItem(new FabricItemSettings().food(CRIMSON_STEW_FOOD).maxCount(1));
+    public static final Item WARPED_STEW = new RandomPotionBowlItem(new FabricItemSettings().food(WARPED_STEW_FOOD).maxCount(1));
+    public static final Item GLOW_RAMEN = new StewItem(new FabricItemSettings().food(GLOW_RAMEN_FOOD).maxCount(1));
+    public static final Item ROOT_RISOTTO = new StewItem(new FabricItemSettings().food(ROOT_RISOTTO_FOOD).maxCount(1));
+
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.MUSHROOM_STEW.getDefaultStack(),
+                new Item[]{
+                        CRIMSON_STEW,
+                        WARPED_STEW,
+                        CHOCOLATE_PUDDING,
+                        CACTUS_SOUP
+                }
+        ));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.BEETROOT_SOUP.getDefaultStack(),
+                new Item[]{
+                        GLOW_RAMEN,
+                        ROOT_RISOTTO
+                }
+        ));
+    }
+
+    // bacon
+    public static final Item BACON = new Item(new FabricItemSettings().food(BACON_FOOD));
+    public static final Item COOKED_BACON = new Item(new FabricItemSettings().food(COOKED_BACON_FOOD));
+
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.COOKED_PORKCHOP.getDefaultStack(),
+                new Item[]{
+                        BACON,
+                        COOKED_BACON
+                }
+        ));
+    }
+
     public static CraftyCuisineConfig config;
 
     @Override
     public void onInitialize() {
         config = AutoConfig.register(CraftyCuisineConfig.class, GsonConfigSerializer::new).getConfig();
 
-        Registry.register(Registry.ITEM, new Identifier(mod_id, "cookie_cutter_square"), COOKIE_CUTTER_SQUARE);
-        Registry.register(Registry.ITEM, new Identifier(mod_id, "cookie_cutter_star"), COOKIE_CUTTER_STAR);
-        Registry.register(Registry.ITEM, new Identifier(mod_id, "cookie_cutter_tree"), COOKIE_CUTTER_TREE);
-        Registry.register(Registry.ITEM, new Identifier(mod_id, "cookie_cutter_creeper"), COOKIE_CUTTER_CREEPER);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_square"), COOKIE_CUTTER_SQUARE);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_star"), COOKIE_CUTTER_STAR);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_tree"), COOKIE_CUTTER_TREE);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_creeper"), COOKIE_CUTTER_CREEPER);
 
         //if (!config.disableAllFoods) {
             //if (config.cookedCarrotEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "cooked_carrot"), COOKED_CARROT);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "cooked_carrot"), COOKED_CARROT);
             //}
             //if (config.friedEggEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "cooked_egg"), COOKED_EGG);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "cooked_egg"), COOKED_EGG);
             //}
             //if (config.turtleEggEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "cooked_turtle_egg"), COOKED_TURTLE_EGG);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "cooked_turtle_egg"), COOKED_TURTLE_EGG);
             //}
             //if (config.piesEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "apple_pie"), APPLE_PIE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "chocolate_pie"), CHOCOLATE_PIE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "chorus_pie"), CHORUS_PIE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "melon_pie"), MELON_PIE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sweet_berry_pie"), SWEET_BERRY_PIE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "glow_berry_pie"), GLOW_BERRY_PIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "apple_pie"), APPLE_PIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "chocolate_pie"), CHOCOLATE_PIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "chorus_pie"), CHORUS_PIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "melon_pie"), MELON_PIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sweet_berry_pie"), SWEET_BERRY_PIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "glow_berry_pie"), GLOW_BERRY_PIE);
             //}
             //if (config.shepherdsPieEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "shepherds_pie"), SHEPHERDS_PIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "shepherds_pie"), SHEPHERDS_PIE);
             //}
             //if (config.jamsAndBreadEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sweet_berry_jam"), SWEET_BERRY_JAM);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "glow_berry_jam"), GLOW_BERRY_JAM);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sweet_berry_bread"), SWEET_BERRY_BREAD);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "glow_berry_bread"), GLOW_BERRY_BREAD);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "honey_bread"), HONEY_BREAD);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sweet_berry_jam"), SWEET_BERRY_JAM);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "glow_berry_jam"), GLOW_BERRY_JAM);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sweet_berry_bread"), SWEET_BERRY_BREAD);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "glow_berry_bread"), GLOW_BERRY_BREAD);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "honey_bread"), HONEY_BREAD);
             //}
             //if (config.candiedEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "candied_apple"), CANDIED_APPLE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "candied_chorus_fruit"), CANDIED_CHORUS_FRUIT);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "candied_melon_slice"), CANDIED_MELON_SLICE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "candied_apple"), CANDIED_APPLE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "candied_chorus_fruit"), CANDIED_CHORUS_FRUIT);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "candied_melon_slice"), CANDIED_MELON_SLICE);
             //}
             //if (config.sweetBerryCandyEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sweet_berry_candy"), SWEET_BERRY_CANDY);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sweet_berry_candy"), SWEET_BERRY_CANDY);
             //}
             //if (config.sushiEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sushi"), SUSHI);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "salmon_cakes"), SALMON_CAKES);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sushi"), SUSHI);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "salmon_cakes"), SALMON_CAKES);
             //}
             //if (config.cookiesEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sugar_cookie"), SUGAR_COOKIE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "frosted_sugar_cookie"), FROSTED_SUGAR_COOKIE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sugar_cookie_square"), SUGAR_COOKIE_SQUARE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_square"), FROSTED_SUGAR_COOKIE_SQUARE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sugar_cookie_star"), SUGAR_COOKIE_STAR);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_star"), FROSTED_SUGAR_COOKIE_STAR);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sugar_cookie_tree"), SUGAR_COOKIE_TREE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_tree"), FROSTED_SUGAR_COOKIE_TREE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "sugar_cookie_creeper"), SUGAR_COOKIE_CREEPER);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_creeper"), FROSTED_SUGAR_COOKIE_CREEPER);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "pumpkin_cookie"), PUMPKIN_COOKIE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "frosted_pumpkin_cookie"), FROSTED_PUMPKIN_COOKIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie"), SUGAR_COOKIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie"), FROSTED_SUGAR_COOKIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie_square"), SUGAR_COOKIE_SQUARE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_square"), FROSTED_SUGAR_COOKIE_SQUARE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie_star"), SUGAR_COOKIE_STAR);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_star"), FROSTED_SUGAR_COOKIE_STAR);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie_tree"), SUGAR_COOKIE_TREE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_tree"), FROSTED_SUGAR_COOKIE_TREE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie_creeper"), SUGAR_COOKIE_CREEPER);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_creeper"), FROSTED_SUGAR_COOKIE_CREEPER);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "pumpkin_cookie"), PUMPKIN_COOKIE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_pumpkin_cookie"), FROSTED_PUMPKIN_COOKIE);
             //}
             //if (config.monsterFoodsEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "cooked_spider_eye"), COOKED_SPIDER_EYE);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "monster_meatballs"), MONSTER_MEATBALLS);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "monster_manicotti"), MONSTER_MANICOTTI);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "cooked_spider_eye"), COOKED_SPIDER_EYE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "monster_meatballs"), MONSTER_MEATBALLS);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "monster_manicotti"), MONSTER_MANICOTTI);
             //}
             //if (config.soupsAndStewsEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "chocolate_pudding"), CHOCOLATE_PUDDING);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "cactus_soup"), CACTUS_SOUP);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "crimson_fungus_stew"), CRIMSON_STEW);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "warped_fungus_stew"), WARPED_STEW);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "chocolate_pudding"), CHOCOLATE_PUDDING);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "cactus_soup"), CACTUS_SOUP);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "crimson_fungus_stew"), CRIMSON_STEW);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "warped_fungus_stew"), WARPED_STEW);
             //}
             //if (config.pastasEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "glow_ramen"), GLOW_RAMEN);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "root_risotto"), ROOT_RISOTTO);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "glow_ramen"), GLOW_RAMEN);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "root_risotto"), ROOT_RISOTTO);
             //}
             //if (config.baconEnabled) {
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "bacon"), BACON);
-                Registry.register(Registry.ITEM, new Identifier(mod_id, "cooked_bacon"), COOKED_BACON);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "bacon"), BACON);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "cooked_bacon"), COOKED_BACON);
             //}
         //}
 
@@ -251,7 +395,7 @@ public class CraftyCuisine implements ModInitializer {
         // actually, no, this is fine because tags don't register at runtime lol
         for (String s : config.fastFood) {
             try {
-                Item i = Registry.ITEM.get(new Identifier(s));
+                Item i = Registries.ITEM.get(new Identifier(s));
                 if (i.isFood()) {
                     ((FoodComponentAccessor) Objects.requireNonNull(i.getFoodComponent())).setSnack(true);
                     LOGGER.debug("Registered food item " + s);
