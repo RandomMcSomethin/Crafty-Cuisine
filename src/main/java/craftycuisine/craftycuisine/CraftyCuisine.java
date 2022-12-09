@@ -65,7 +65,7 @@ public class CraftyCuisine implements ModInitializer {
             .meat()
             .build();
     public static final FoodComponent SWEET_BERRY_CANDY_FOOD = new FoodComponent.Builder().hunger(10).saturationModifier(1.0F)
-            .statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 300), 1.0F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1200), 1.0F)
             .build();
     public static final FoodComponent SALMON_CAKES_FOOD = new FoodComponent.Builder().hunger(9).saturationModifier(0.5F)
             .statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 600), 1.0F)
@@ -73,6 +73,32 @@ public class CraftyCuisine implements ModInitializer {
     public static final FoodComponent SUSHI_FOOD = new FoodComponent.Builder().hunger(10).saturationModifier(0.5F)
             .statusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 600), 1.0F)
             .meat()
+            .build();
+    public static final FoodComponent SWEET_BERRY_BREAD_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(0.6F)
+            .build();
+    public static final FoodComponent HONEY_BREAD_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(0.6F)
+            .build();
+    public static final FoodComponent GLOW_BERRY_BREAD_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(0.6F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 600), 1.0F)
+            .build();
+
+    // Soups/stews
+    public static final FoodComponent CHOCOLATE_PUDDING_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.6F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 600), 1.0F)
+            .build();
+    public static final FoodComponent CACTUS_SOUP_FOOD = new FoodComponent.Builder().hunger(2).saturationModifier(0.3F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 600), 1.0F)
+            .build();
+    public static final FoodComponent CRIMSON_STEW_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.6F)
+            .build();
+    public static final FoodComponent WARPED_STEW_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(0.6F)
+            .build();
+    public static final FoodComponent GLOW_RAMEN_FOOD = new FoodComponent.Builder().hunger(10).saturationModifier(0.6F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 600), 1.0F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 600), 1.0F)
+            .build();
+    public static final FoodComponent ROOT_RISOTTO_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(0.6F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 600), 1.0F)
             .build();
 
     // items
@@ -95,9 +121,9 @@ public class CraftyCuisine implements ModInitializer {
 
     public static final Item SWEET_BERRY_JAM = new DrinkableItem(new FabricItemSettings().group(ItemGroup.FOOD).food(SWEET_BERRY_JAM_FOOD).recipeRemainder(Items.GLASS_BOTTLE));
     public static final Item GLOW_BERRY_JAM = new DrinkableItem(new FabricItemSettings().group(ItemGroup.FOOD).food(GLOW_BERRY_JAM_FOOD).recipeRemainder(Items.GLASS_BOTTLE));
-    public static final Item SWEET_BERRY_BREAD = new PoisonCureItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.SUSPICIOUS_STEW), false);
-    public static final Item GLOW_BERRY_BREAD = new PoisonCureItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.SUSPICIOUS_STEW), true);
-    public static final Item HONEY_BREAD = new PoisonCureItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.SUSPICIOUS_STEW), false);
+    public static final Item SWEET_BERRY_BREAD = new PoisonCureItem(new FabricItemSettings().group(ItemGroup.FOOD).food(SWEET_BERRY_BREAD_FOOD));
+    public static final Item GLOW_BERRY_BREAD = new PoisonCureItem(new FabricItemSettings().group(ItemGroup.FOOD).food(GLOW_BERRY_BREAD_FOOD));
+    public static final Item HONEY_BREAD = new PoisonCureItem(new FabricItemSettings().group(ItemGroup.FOOD).food(HONEY_BREAD_FOOD));
 
     public static final Item CANDIED_APPLE = new CandiedItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CANDIED_FOOD));
     public static final Item CANDIED_CHORUS_FRUIT = new ChorusFruitItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CANDIED_FOOD));
@@ -125,12 +151,12 @@ public class CraftyCuisine implements ModInitializer {
     public static final Item MONSTER_MEATBALLS = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(MONSTER_MEATBALLS_FOOD).maxCount(1));
     public static final Item MONSTER_MANICOTTI = new MonsterManicottiItem(new FabricItemSettings().group(ItemGroup.FOOD).food(MONSTER_MANICOTTI_FOOD));
 
-    public static final Item CHOCOLATE_PUDDING = new PotionBowlItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.BREAD).maxCount(1), StatusEffects.REGENERATION);
-    public static final Item CACTUS_SOUP = new PotionBowlItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.POTATO).maxCount(1), StatusEffects.SPEED);
-    public static final Item CRIMSON_STEW = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.BREAD).maxCount(1));
-    public static final Item WARPED_STEW = new RandomPotionBowlItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.MUSHROOM_STEW).maxCount(1));
-    public static final Item GLOW_RAMEN = new PotionBowlItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.RABBIT_STEW).maxCount(1), StatusEffects.GLOWING);
-    public static final Item ROOT_RISOTTO = new PotionBowlItem(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.MUSHROOM_STEW).maxCount(1), StatusEffects.STRENGTH);
+    public static final Item CHOCOLATE_PUDDING = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CHOCOLATE_PUDDING_FOOD).maxCount(1));
+    public static final Item CACTUS_SOUP = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CACTUS_SOUP_FOOD).maxCount(1));
+    public static final Item CRIMSON_STEW = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(CRIMSON_STEW_FOOD).maxCount(1));
+    public static final Item WARPED_STEW = new RandomPotionBowlItem(new FabricItemSettings().group(ItemGroup.FOOD).food(WARPED_STEW_FOOD).maxCount(1));
+    public static final Item GLOW_RAMEN = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(GLOW_RAMEN_FOOD).maxCount(1));
+    public static final Item ROOT_RISOTTO = new StewItem(new FabricItemSettings().group(ItemGroup.FOOD).food(ROOT_RISOTTO_FOOD).maxCount(1));
 
     public static final Item BACON = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(BACON_FOOD));
     public static final Item COOKED_BACON = new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(COOKED_BACON_FOOD));

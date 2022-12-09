@@ -12,18 +12,14 @@ import net.minecraft.stat.Stats;
 import net.minecraft.world.World;
 
 public class PoisonCureItem extends Item {
-    private boolean glow;
-    public PoisonCureItem(FabricItemSettings food, boolean glow) {
-        super(food); this.glow = glow;
+    public PoisonCureItem(FabricItemSettings food) {
+        super(food);
     }
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (!world.isClient) {
             user.removeStatusEffect(StatusEffects.POISON);
-            if (glow) {
-                user.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 300));
-            }
         }
         super.finishUsing(stack, world, user);
         return stack;

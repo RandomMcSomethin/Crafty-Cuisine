@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class CandiedItem extends PoisonCureItem {
     public CandiedItem(FabricItemSettings food) {
-        super(food, false);
+        super(food);
     }
 
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
