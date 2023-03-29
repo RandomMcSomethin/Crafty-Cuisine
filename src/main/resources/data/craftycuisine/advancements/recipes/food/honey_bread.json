@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:honey_bread"
-    ]
-  },
   "criteria": {
-    "has_honey": {
+    "has_honey_bottle": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:honey_bottle"
+            "items": [
+              "minecraft:honey_bottle"
+            ]
           }
         ]
       }
@@ -25,8 +22,13 @@
   },
   "requirements": [
     [
-      "has_honey",
+      "has_honey_bottle",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:honey_bread"
+    ]
+  }
 }

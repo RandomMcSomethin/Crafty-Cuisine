@@ -23,6 +23,12 @@ public class CraftyCuisineClient implements ClientModInitializer {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 :
                 ((DyeableItem)stack.getItem()).getColor(stack), CraftyCuisine.FROSTED_SUGAR_COOKIE_CREEPER);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 :
+                ((DyeableItem)stack.getItem()).getColor(stack), CraftyCuisine.FROSTED_SUGAR_COOKIE_HEART);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 :
+                ((DyeableItem)stack.getItem()).getColor(stack), CraftyCuisine.FROSTED_SUGAR_COOKIE_SHAMROCK);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 :
+                ((DyeableItem)stack.getItem()).getColor(stack), CraftyCuisine.FROSTED_SUGAR_COOKIE_EGG);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 :
                 ((DyeableItem)stack.getItem()).getColor(stack), CraftyCuisine.FROSTED_PUMPKIN_COOKIE);
     }
 }

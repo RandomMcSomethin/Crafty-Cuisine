@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "craftycuisine",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "name": "Crafty Cuisine",
   "description": "Adds food centered around expanding the vanilla options.",
   "authors": ["RandomMcSomethin"],

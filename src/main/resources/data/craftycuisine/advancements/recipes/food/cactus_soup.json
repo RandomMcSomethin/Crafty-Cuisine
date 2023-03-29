@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:cactus_soup"
-    ]
-  },
   "criteria": {
     "has_cactus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:cactus"
+            "items": [
+              "minecraft:cactus"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_cactus",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:cactus_soup"
+    ]
+  }
 }

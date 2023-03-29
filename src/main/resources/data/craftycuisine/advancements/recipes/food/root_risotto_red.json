@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:root_risotto_red"
-    ]
-  },
   "criteria": {
     "has_hanging_roots": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:hanging_roots"
+            "items": [
+              "minecraft:hanging_roots"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_hanging_roots",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:root_risotto_red"
+    ]
+  }
 }

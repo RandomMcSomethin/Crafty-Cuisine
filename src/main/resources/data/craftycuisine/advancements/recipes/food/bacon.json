@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:bacon"
-    ]
-  },
   "criteria": {
     "has_porkchop": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:porkchop"
+            "items": [
+              "minecraft:porkchop"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_porkchop",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:bacon"
+    ]
+  }
 }

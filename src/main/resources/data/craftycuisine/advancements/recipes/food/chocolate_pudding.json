@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:chocolate_pudding"
-    ]
-  },
   "criteria": {
     "has_cocoa_beans": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:cocoa_beans"
+            "items": [
+              "minecraft:cocoa_beans"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_cocoa_beans",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:chocolate_pudding"
+    ]
+  }
 }

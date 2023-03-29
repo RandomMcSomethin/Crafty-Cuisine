@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:shepherds_pie"
-    ]
-  },
   "criteria": {
     "has_cooked_mutton": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:cooked_mutton"
+            "items": [
+              "minecraft:cooked_mutton"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_cooked_mutton",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:shepherds_pie"
+    ]
+  }
 }

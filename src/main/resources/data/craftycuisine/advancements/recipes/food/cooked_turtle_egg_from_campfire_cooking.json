@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:cooked_turtle_egg_from_campfire_cooking"
-    ]
-  },
   "criteria": {
     "has_turtle_egg": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:turtle_egg"
+            "items": [
+              "minecraft:turtle_egg"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_turtle_egg",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:cooked_turtle_egg_from_campfire_cooking"
+    ]
+  }
 }

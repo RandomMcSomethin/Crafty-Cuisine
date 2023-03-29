@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:cooked_bacon"
-    ]
-  },
   "criteria": {
     "has_bacon": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "craftycuisine:bacon"
+            "items": [
+              "craftycuisine:bacon"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_bacon",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:cooked_bacon"
+    ]
+  }
 }

@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:glow_berry_pie"
-    ]
-  },
   "criteria": {
     "has_glow_berries": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:glow_berries"
+            "items": [
+              "minecraft:glow_berries"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_glow_berries",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:glow_berry_pie"
+    ]
+  }
 }

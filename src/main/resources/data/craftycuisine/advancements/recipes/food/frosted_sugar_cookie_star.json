@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:frosted_sugar_cookie_star"
-    ]
-  },
   "criteria": {
-    "has_sugar": {
+    "has_sugar_cookie": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:sugar"
+            "items": [
+              "craftycuisine:sugar_cookie_star"
+            ]
           }
         ]
       }
@@ -19,14 +16,19 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "craftycuisine:sugar_cookie_star"
+        "recipe": "craftycuisine:frosted_sugar_cookie_star"
       }
     }
   },
   "requirements": [
     [
-      "has_sugar",
+      "has_sugar_cookie",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:frosted_sugar_cookie_star"
+    ]
+  }
 }

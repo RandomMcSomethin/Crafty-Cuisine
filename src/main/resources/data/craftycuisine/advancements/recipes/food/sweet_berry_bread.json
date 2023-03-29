@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:sweet_berry_bread"
-    ]
-  },
   "criteria": {
     "has_sweet_berry_jam": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "craftycuisine:sweet_berry_jam"
+            "items": [
+              "craftycuisine:sweet_berry_jam"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_sweet_berry_jam",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:sweet_berry_bread"
+    ]
+  }
 }

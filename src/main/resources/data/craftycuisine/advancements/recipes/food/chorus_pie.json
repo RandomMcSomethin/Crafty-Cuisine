@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:chorus_pie"
-    ]
-  },
   "criteria": {
     "has_chorus_flower": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:chorus_flower"
+            "items": [
+              "minecraft:chorus_flower"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_chorus_flower",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:chorus_pie"
+    ]
+  }
 }

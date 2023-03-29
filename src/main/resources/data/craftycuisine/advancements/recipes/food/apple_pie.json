@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:apple_pie"
-    ]
-  },
   "criteria": {
     "has_apple": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:apple"
+            "items": [
+              "minecraft:apple"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_apple",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:apple_pie"
+    ]
+  }
 }

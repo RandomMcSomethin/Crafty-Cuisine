@@ -30,6 +30,11 @@
     "item.craftycuisine.cookie_cutter_star": "Cookie Cutter (Star)",
     "item.craftycuisine.cookie_cutter_tree": "Cookie Cutter (Tree)",
     "item.craftycuisine.cookie_cutter_creeper": "Cookie Cutter (Creeper)",
+
+    "item.craftycuisine.cookie_cutter_heart": "Cookie Cutter (Heart)",
+    "item.craftycuisine.cookie_cutter_shamrock": "Cookie Cutter (Shamrock)",
+    "item.craftycuisine.cookie_cutter_egg": "Cookie Cutter (Egg)",
+
     "item.craftycuisine.sugar_cookie": "Sugar Cookie",
     "item.craftycuisine.frosted_sugar_cookie": "Frosted Sugar Cookie",
     "item.craftycuisine.sugar_cookie_square": "Sugar Cookie",
@@ -48,6 +53,22 @@
     "item.craftycuisine.sugar_cookie_creeper_tooltip": "§7§oCreeper",
     "item.craftycuisine.frosted_sugar_cookie_creeper": "Frosted Sugar Cookie",
     "item.craftycuisine.frosted_sugar_cookie_creeper_tooltip": "§7§oCreeper",
+
+    "item.craftycuisine.sugar_cookie_heart": "Sugar Cookie",
+    "item.craftycuisine.sugar_cookie_heart_tooltip": "§7§oHeart",
+    "item.craftycuisine.frosted_sugar_cookie_heart": "Frosted Sugar Cookie",
+    "item.craftycuisine.frosted_sugar_cookie_heart_tooltip": "§7§oHeart",
+
+    "item.craftycuisine.sugar_cookie_shamrock": "Sugar Cookie",
+    "item.craftycuisine.sugar_cookie_shamrock_tooltip": "§7§oShamrock",
+    "item.craftycuisine.frosted_sugar_cookie_shamrock": "Frosted Sugar Cookie",
+    "item.craftycuisine.frosted_sugar_cookie_shamrock_tooltip": "§7§oShamrock",
+
+    "item.craftycuisine.sugar_cookie_egg": "Sugar Cookie",
+    "item.craftycuisine.sugar_cookie_egg_tooltip": "§7§oEgg",
+    "item.craftycuisine.frosted_sugar_cookie_egg": "Frosted Sugar Cookie",
+    "item.craftycuisine.frosted_sugar_cookie_egg_tooltip": "§7§oEgg",
+
     "item.craftycuisine.pumpkin_cookie": "Pumpkin Cookie",
     "item.craftycuisine.frosted_pumpkin_cookie": "Frosted Pumpkin Cookie",
     "item.craftycuisine.chocolate_pudding": "Chocolate Pudding",

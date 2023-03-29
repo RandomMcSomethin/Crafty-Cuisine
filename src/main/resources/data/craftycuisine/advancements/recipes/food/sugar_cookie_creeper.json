@@ -1,25 +1,34 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:sugar_cookie_creeper"
-    ]
-  },
   "criteria": {
     "has_sugar": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:sugar"
+            "items": [
+              "minecraft:sugar"
+            ]
           }
         ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "craftycuisine:sugar_cookie_creeper"
       }
     }
   },
   "requirements": [
     [
-      "has_sugar"
+      "has_sugar",
+      "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:sugar_cookie_creeper"
+    ]
+  }
 }

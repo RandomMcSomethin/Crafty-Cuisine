@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:candied_melon_slice"
-    ]
-  },
   "criteria": {
     "has_melon_slice": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:melon_slice"
+            "items": [
+              "minecraft:melon_slice"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_melon_slice",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:candied_melon_slice"
+    ]
+  }
 }

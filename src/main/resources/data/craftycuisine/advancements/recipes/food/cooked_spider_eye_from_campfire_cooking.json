@@ -1,17 +1,14 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:cooked_spider_eye_from_campfire_cooking"
-    ]
-  },
   "criteria": {
     "has_spider_eye": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:spider_eye"
+            "items": [
+              "minecraft:spider_eye"
+            ]
           }
         ]
       }
@@ -28,5 +25,10 @@
       "has_spider_eye",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:cooked_spider_eye_from_campfire_cooking"
+    ]
+  }
 }

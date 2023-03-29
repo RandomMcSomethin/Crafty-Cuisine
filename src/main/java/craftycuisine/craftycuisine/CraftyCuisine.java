@@ -9,6 +9,7 @@ import craftycuisine.craftycuisine.items.*;
 //import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 //import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import craftycuisine.craftycuisine.mixin.FoodComponentAccessor;
+import craftycuisine.craftycuisine.mixin.RecipeRemainderAccessor;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -105,10 +106,13 @@ public class CraftyCuisine implements ModInitializer {
     // items
 
     // cookie cutters
-    public static final Item COOKIE_CUTTER_SQUARE = new Item(new FabricItemSettings());
-    public static final Item COOKIE_CUTTER_STAR = new Item(new FabricItemSettings());
-    public static final Item COOKIE_CUTTER_TREE = new Item(new FabricItemSettings());
-    public static final Item COOKIE_CUTTER_CREEPER = new Item(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_SQUARE = new CookieCutterItem(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_STAR = new CookieCutterItem(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_TREE = new CookieCutterItem(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_CREEPER = new CookieCutterItem(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_HEART = new CookieCutterItem(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_SHAMROCK = new CookieCutterItem(new FabricItemSettings());
+    public static final Item COOKIE_CUTTER_EGG = new CookieCutterItem(new FabricItemSettings());
 
     static {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> entries.addBefore(Items.EXPERIENCE_BOTTLE.getDefaultStack(),
@@ -116,7 +120,10 @@ public class CraftyCuisine implements ModInitializer {
                         COOKIE_CUTTER_SQUARE,
                         COOKIE_CUTTER_STAR,
                         COOKIE_CUTTER_TREE,
-                        COOKIE_CUTTER_CREEPER
+                        COOKIE_CUTTER_CREEPER,
+                        COOKIE_CUTTER_HEART,
+                        COOKIE_CUTTER_SHAMROCK,
+                        COOKIE_CUTTER_EGG
             }
         ));
     }
@@ -226,6 +233,12 @@ public class CraftyCuisine implements ModInitializer {
     public static final Item FROSTED_SUGAR_COOKIE_TREE = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_tree_tooltip");
     public static final Item SUGAR_COOKIE_CREEPER = new TooltipItem(new FabricItemSettings().food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_creeper_tooltip");
     public static final Item FROSTED_SUGAR_COOKIE_CREEPER = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_creeper_tooltip");
+    public static final Item SUGAR_COOKIE_HEART = new TooltipItem(new FabricItemSettings().food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_heart_tooltip");
+    public static final Item FROSTED_SUGAR_COOKIE_HEART = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_heart_tooltip");
+    public static final Item SUGAR_COOKIE_SHAMROCK = new TooltipItem(new FabricItemSettings().food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_shamrock_tooltip");
+    public static final Item FROSTED_SUGAR_COOKIE_SHAMROCK = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_shamrock_tooltip");
+    public static final Item SUGAR_COOKIE_EGG = new TooltipItem(new FabricItemSettings().food(FoodComponents.COOKIE), "item.craftycuisine.sugar_cookie_egg_tooltip");
+    public static final Item FROSTED_SUGAR_COOKIE_EGG = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_COOKIE_FOOD), "item.craftycuisine.frosted_sugar_cookie_egg_tooltip");
 
     public static final Item PUMPKIN_COOKIE = new Item(new FabricItemSettings().food(BIG_COOKIE_FOOD));
     public static final Item FROSTED_PUMPKIN_COOKIE = new DyeableCookieItem(new FabricItemSettings().food(FROSTED_BIG_COOKIE_FOOD), "");
@@ -243,6 +256,13 @@ public class CraftyCuisine implements ModInitializer {
                         SUGAR_COOKIE_TREE,
                         FROSTED_SUGAR_COOKIE_TREE,
                         SUGAR_COOKIE_CREEPER,
+                        FROSTED_SUGAR_COOKIE_CREEPER,
+                        SUGAR_COOKIE_HEART,
+                        FROSTED_SUGAR_COOKIE_HEART,
+                        SUGAR_COOKIE_SHAMROCK,
+                        FROSTED_SUGAR_COOKIE_SHAMROCK,
+                        SUGAR_COOKIE_EGG,
+                        FROSTED_SUGAR_COOKIE_EGG,
                         PUMPKIN_COOKIE,
                         FROSTED_PUMPKIN_COOKIE
                 }
@@ -314,6 +334,9 @@ public class CraftyCuisine implements ModInitializer {
         Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_star"), COOKIE_CUTTER_STAR);
         Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_tree"), COOKIE_CUTTER_TREE);
         Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_creeper"), COOKIE_CUTTER_CREEPER);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_heart"), COOKIE_CUTTER_HEART);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_shamrock"), COOKIE_CUTTER_SHAMROCK);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_egg"), COOKIE_CUTTER_EGG);
 
         //if (!config.disableAllFoods) {
             //if (config.cookedCarrotEnabled) {
@@ -366,6 +389,12 @@ public class CraftyCuisine implements ModInitializer {
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_tree"), FROSTED_SUGAR_COOKIE_TREE);
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie_creeper"), SUGAR_COOKIE_CREEPER);
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_creeper"), FROSTED_SUGAR_COOKIE_CREEPER);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie_heart"), SUGAR_COOKIE_HEART);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_heart"), FROSTED_SUGAR_COOKIE_HEART);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie_shamrock"), SUGAR_COOKIE_SHAMROCK);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_shamrock"), FROSTED_SUGAR_COOKIE_SHAMROCK);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie_egg"), SUGAR_COOKIE_EGG);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_sugar_cookie_egg"), FROSTED_SUGAR_COOKIE_EGG);
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "pumpkin_cookie"), PUMPKIN_COOKIE);
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "frosted_pumpkin_cookie"), FROSTED_PUMPKIN_COOKIE);
             //}

@@ -1,10 +1,5 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "craftycuisine:salmon_cakes"
-    ]
-  },
   "criteria": {
     "has_cooked_salmon": {
       "trigger": "minecraft:inventory_changed",
@@ -30,5 +25,10 @@
       "has_cooked_salmon",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:salmon_cakes"
+    ]
+  }
 }
