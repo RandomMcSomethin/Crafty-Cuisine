@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_snowball": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:snowball"
+            ]
+          }
+        ]
+      }
+    },
+    "has_honey_bottle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:honey_bottle"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "craftycuisine:ice_creams/honey_ice_cream"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_snowball",
+      "has_honey_bottle",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:ice_creams/honey_ice_cream"
+    ]
+  }
+}

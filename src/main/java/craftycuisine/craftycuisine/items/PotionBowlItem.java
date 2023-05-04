@@ -12,18 +12,26 @@ import net.minecraft.world.World;
 
 public class PotionBowlItem extends StewItem {
 
-    StatusEffect effect;
+    StatusEffect[] effects;
 
     public PotionBowlItem(Settings settings, StatusEffect effect) {
         super(settings);
-        this.effect = effect;
+        this.effects[0] = effect;
+    }
+
+    public PotionBowlItem(Settings settings, StatusEffect[] effects) {
+        super(settings);
+        this.effects = effects;
     }
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         ItemStack itemStack = super.finishUsing(stack, world, user);
         if (!world.isClient) {
-            user.addStatusEffect(new StatusEffectInstance(effect, 600));
+            if (effects.length == 1)
+                user.addStatusEffect(new StatusEffectInstance(effects[0], 600));
+            else // pick a random potion effect
+                user.addStatusEffect(new StatusEffectInstance(effects[world.getRandom().nextInt(effects.length)], 600));
         }
         return user instanceof PlayerEntity && ((PlayerEntity)user).getAbilities().creativeMode ? itemStack : new ItemStack(Items.BOWL);
     }

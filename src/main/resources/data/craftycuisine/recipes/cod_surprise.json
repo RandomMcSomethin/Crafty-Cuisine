@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:warped_fungus"
+    },
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "craftycuisine:cod_surprise"
+  }
+}

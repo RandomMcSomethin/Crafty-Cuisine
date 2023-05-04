@@ -1,32 +1,28 @@
 package craftycuisine.craftycuisine;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import craftycuisine.craftycuisine.config.CraftyCuisineConfig;
 import craftycuisine.craftycuisine.items.*;
 //import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 //import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import craftycuisine.craftycuisine.mixin.FoodComponentAccessor;
-import craftycuisine.craftycuisine.mixin.RecipeRemainderAccessor;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 import net.minecraft.util.math.random.Random;
 
+import net.minecraft.village.TradeOffer;
+import net.minecraft.village.VillagerProfession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +37,9 @@ public class CraftyCuisine implements ModInitializer {
 
     // food components
     public static final FoodComponent COOKED_CARROT_FOOD = new FoodComponent.Builder().hunger(4).saturationModifier(1).build();
+    public static final FoodComponent BAKED_APPLE_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(1).build();
+    public static final FoodComponent COOKED_BROWN_MUSHROOM_FOOD = new FoodComponent.Builder().hunger(1).saturationModifier(1).build();
+    public static final FoodComponent COOKED_RED_MUSHROOM_FOOD = new FoodComponent.Builder().hunger(2).saturationModifier(0.5F).build();
     public static final FoodComponent SWEET_BERRY_JAM_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(0.15F).build();
     public static final FoodComponent GLOW_BERRY_JAM_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(0.15F)
             .statusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 300), 1.0F)
@@ -72,6 +71,9 @@ public class CraftyCuisine implements ModInitializer {
     public static final FoodComponent SALMON_CAKES_FOOD = new FoodComponent.Builder().hunger(9).saturationModifier(0.5F)
             .statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 600), 1.0F)
             .build();
+    public static final FoodComponent SEAFOAM_PUDDING_FOOD = new FoodComponent.Builder().hunger(8).saturationModifier(0.6F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.LUCK, 3600), 1.0F)
+            .build();
     public static final FoodComponent SUSHI_FOOD = new FoodComponent.Builder().hunger(10).saturationModifier(0.5F)
             .statusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 600), 1.0F)
             .meat()
@@ -91,6 +93,8 @@ public class CraftyCuisine implements ModInitializer {
     public static final FoodComponent CACTUS_SOUP_FOOD = new FoodComponent.Builder().hunger(2).saturationModifier(0.3F)
             .statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 600), 1.0F)
             .build();
+    public static final FoodComponent FISH_SOUP_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.6F)
+            .build();
     public static final FoodComponent CRIMSON_STEW_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.6F)
             .build();
     public static final FoodComponent WARPED_STEW_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(0.6F)
@@ -101,6 +105,32 @@ public class CraftyCuisine implements ModInitializer {
             .build();
     public static final FoodComponent ROOT_RISOTTO_FOOD = new FoodComponent.Builder().hunger(6).saturationModifier(0.6F)
             .statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 600), 1.0F)
+            .build();
+
+    // ice creams
+    public static final FoodComponent ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(3).saturationModifier(0.3F)
+            .build();
+    public static final FoodComponent APPLE_ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.5F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.HASTE, 1200), 1.0F)
+            .build();
+    public static final FoodComponent CHOCOLATE_ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.5F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1200), 1.0F)
+            .build();
+    public static final FoodComponent MELON_ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.5F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 0), 1.0F)
+            .build();
+    public static final FoodComponent CHORUS_ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.5F)
+            .build();
+    public static final FoodComponent PUMPKIN_ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.5F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1200), 1.0F)
+            .build();
+    public static final FoodComponent SWEET_BERRY_ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.5F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 1200), 1.0F)
+            .build();
+    public static final FoodComponent GLOW_BERRY_ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.5F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 1200), 1.0F)
+            .build();
+    public static final FoodComponent HONEY_ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(5).saturationModifier(0.5F)
             .build();
 
     // items
@@ -130,15 +160,21 @@ public class CraftyCuisine implements ModInitializer {
 
     // basic cooked foods
     public static final Item COOKED_CARROT = new Item(new FabricItemSettings().food(COOKED_CARROT_FOOD));
+    public static final Item BAKED_APPLE = new Item(new FabricItemSettings().food(BAKED_APPLE_FOOD));
+    public static final Item COOKED_BROWN_MUSHROOM = new Item(new FabricItemSettings().food(COOKED_BROWN_MUSHROOM_FOOD));
+    public static final Item COOKED_RED_MUSHROOM = new Item(new FabricItemSettings().food(COOKED_RED_MUSHROOM_FOOD));
     public static final Item COOKED_EGG = new Item(new FabricItemSettings().food(FoodComponents.POTATO));
     public static final Item COOKED_TURTLE_EGG = new CookedTurtleEggItem(new FabricItemSettings().food(FoodComponents.GOLDEN_CARROT));
 
     static {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.CARROT.getDefaultStack(), COOKED_CARROT));
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addBefore(Items.BEETROOT.getDefaultStack(),
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.APPLE.getDefaultStack(), BAKED_APPLE));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.BEETROOT.getDefaultStack(),
                 new Item[]{
                         COOKED_EGG,
-                        COOKED_TURTLE_EGG
+                        COOKED_TURTLE_EGG,
+                        COOKED_BROWN_MUSHROOM,
+                        COOKED_RED_MUSHROOM
                 }
         ));
     }
@@ -162,6 +198,33 @@ public class CraftyCuisine implements ModInitializer {
                         MELON_PIE,
                         SWEET_BERRY_PIE,
                         GLOW_BERRY_PIE
+                }
+        ));
+    }
+
+    // ice creams
+    public static final Item ICE_CREAM = new StewItem(new FabricItemSettings().food(ICE_CREAM_FOOD).maxCount(1));
+    public static final Item APPLE_ICE_CREAM = new StewItem(new FabricItemSettings().food(APPLE_ICE_CREAM_FOOD).maxCount(1));
+    public static final Item CHOCOLATE_ICE_CREAM = new StewItem(new FabricItemSettings().food(CHOCOLATE_ICE_CREAM_FOOD).maxCount(1));
+    public static final Item CHORUS_ICE_CREAM = new ChorusFruitBowlItem(new FabricItemSettings().food(CHORUS_ICE_CREAM_FOOD).maxCount(1));
+    public static final Item MELON_ICE_CREAM = new StewItem(new FabricItemSettings().food(MELON_ICE_CREAM_FOOD).maxCount(1));
+    public static final Item PUMPKIN_ICE_CREAM = new StewItem(new FabricItemSettings().food(PUMPKIN_ICE_CREAM_FOOD).maxCount(1));
+    public static final Item SWEET_BERRY_ICE_CREAM = new StewItem(new FabricItemSettings().food(SWEET_BERRY_ICE_CREAM_FOOD).maxCount(1));
+    public static final Item GLOW_BERRY_ICE_CREAM = new StewItem(new FabricItemSettings().food(GLOW_BERRY_ICE_CREAM_FOOD).maxCount(1));
+    public static final Item HONEY_ICE_CREAM = new PoisonCureBowlItem(new FabricItemSettings().food(HONEY_ICE_CREAM_FOOD).maxCount(1));
+
+    static {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addBefore(Items.PUMPKIN_PIE.getDefaultStack(),
+                new Item[]{
+                        ICE_CREAM,
+                        APPLE_ICE_CREAM,
+                        CHOCOLATE_ICE_CREAM,
+                        CHORUS_ICE_CREAM,
+                        MELON_ICE_CREAM,
+                        PUMPKIN_ICE_CREAM,
+                        SWEET_BERRY_ICE_CREAM,
+                        GLOW_BERRY_ICE_CREAM,
+                        HONEY_ICE_CREAM
                 }
         ));
     }
@@ -216,10 +279,31 @@ public class CraftyCuisine implements ModInitializer {
     // fish
     public static final Item SUSHI = new Item(new FabricItemSettings().food(SUSHI_FOOD));
     public static final Item SALMON_CAKES = new Item(new FabricItemSettings().food(SALMON_CAKES_FOOD));
+    public static final Item FISH_SOUP = new StewItem(new FabricItemSettings().food(FISH_SOUP_FOOD).maxCount(1));
+    public static final Item COD_SURPRISE = new PotionBowlItem(new FabricItemSettings().food(FoodComponents.MUSHROOM_STEW).maxCount(1),
+            new StatusEffect[] {
+                    StatusEffects.HASTE,
+                    StatusEffects.REGENERATION,
+                    StatusEffects.JUMP_BOOST,
+                    StatusEffects.RESISTANCE,
+                    StatusEffects.STRENGTH,
+                    StatusEffects.DOLPHINS_GRACE,
+                    StatusEffects.INVISIBILITY,
+                    StatusEffects.NIGHT_VISION,
+                    StatusEffects.WATER_BREATHING
+            });
+    public static final Item SEAFOAM_PUDDING = new StewItem(new FabricItemSettings().food(SEAFOAM_PUDDING_FOOD).maxCount(1));
 
     static {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.PUFFERFISH.getDefaultStack(), SUSHI));
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.COOKED_SALMON.getDefaultStack(), SALMON_CAKES));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.COOKED_SALMON.getDefaultStack(),
+                new Item[]{
+                        SALMON_CAKES,
+                        FISH_SOUP,
+                        COD_SURPRISE,
+                        SEAFOAM_PUDDING
+                }
+        ));
     }
 
     // cookies
@@ -338,9 +422,23 @@ public class CraftyCuisine implements ModInitializer {
         Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_shamrock"), COOKIE_CUTTER_SHAMROCK);
         Registry.register(Registries.ITEM, new Identifier(mod_id, "cookie_cutter_egg"), COOKIE_CUTTER_EGG);
 
+        // ice creams
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "ice_cream"), ICE_CREAM);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "apple_ice_cream"), APPLE_ICE_CREAM);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "chocolate_ice_cream"), CHOCOLATE_ICE_CREAM);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "chorus_ice_cream"), CHORUS_ICE_CREAM);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "melon_ice_cream"), MELON_ICE_CREAM);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "pumpkin_ice_cream"), PUMPKIN_ICE_CREAM);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "sweet_berry_ice_cream"), SWEET_BERRY_ICE_CREAM);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "glow_berry_ice_cream"), GLOW_BERRY_ICE_CREAM);
+        Registry.register(Registries.ITEM, new Identifier(mod_id, "honey_ice_cream"), HONEY_ICE_CREAM);
+
         //if (!config.disableAllFoods) {
             //if (config.cookedCarrotEnabled) {
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "cooked_carrot"), COOKED_CARROT);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "baked_apple"), BAKED_APPLE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "cooked_brown_mushroom"), COOKED_BROWN_MUSHROOM);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "cooked_red_mushroom"), COOKED_RED_MUSHROOM);
             //}
             //if (config.friedEggEnabled) {
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "cooked_egg"), COOKED_EGG);
@@ -377,6 +475,9 @@ public class CraftyCuisine implements ModInitializer {
             //if (config.sushiEnabled) {
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "sushi"), SUSHI);
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "salmon_cakes"), SALMON_CAKES);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "fish_soup"), FISH_SOUP);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "cod_surprise"), COD_SURPRISE);
+                Registry.register(Registries.ITEM, new Identifier(mod_id, "seafoam_pudding"), SEAFOAM_PUDDING);
             //}
             //if (config.cookiesEnabled) {
                 Registry.register(Registries.ITEM, new Identifier(mod_id, "sugar_cookie"), SUGAR_COOKIE);
@@ -436,6 +537,16 @@ public class CraftyCuisine implements ModInitializer {
             }
 
         }
+
+
+        // trades
+        if (config.fishSoupTrade) {
+            TradeOfferHelper.registerVillagerOffers(VillagerProfession.FISHERMAN, 4,
+                    factories -> {
+                        factories.add((entity, random) -> new TradeOffer(new ItemStack(Items.EMERALD, 1), new ItemStack(FISH_SOUP, 1), 16, 3, 0.05f));
+                    });
+        }
+
         LOGGER.info("Crafty Cuisine has been initialized");
     }
 

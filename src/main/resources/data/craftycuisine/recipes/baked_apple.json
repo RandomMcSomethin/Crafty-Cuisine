@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:apple"
+  },
+  "result": "craftycuisine:baked_apple",
+  "experience": 0.35,
+  "cookingtime": 200
+}

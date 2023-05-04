@@ -27,12 +27,20 @@ public class CraftyCuisineConfig implements ConfigData {
             "craftycuisine:pumpkin_cookie",
             "craftycuisine:frosted_pumpkin_cookie",
             "craftycuisine:bacon",
-            "craftycuisine:cooked_bacon"};
+            "craftycuisine:cooked_bacon",
+            "craftycuisine:cooked_brown_mushroom",
+            "craftycuisine:cooked_red_mushroom"
+    };
 
     @ConfigEntry.Category("craftycuisine.general")
     @ConfigEntry.Gui.RequiresRestart
     @ConfigEntry.Gui.Tooltip
     public List<String> fastFood = Arrays.asList(defaultFastFoods);
+
+    @ConfigEntry.Category("craftycuisine.general")
+    @ConfigEntry.Gui.RequiresRestart
+    @ConfigEntry.Gui.Tooltip
+    public boolean fishSoupTrade = true;
 
     /* probably not going to use these anytime soon
        If you want to disable foods, you can use a datapack with blank recipes,
