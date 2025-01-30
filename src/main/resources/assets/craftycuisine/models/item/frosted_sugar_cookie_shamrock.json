@@ -1,0 +1,8 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "craftycuisine:item/cookie_frosting_shamrock",
+    "layer1": "craftycuisine:item/frosted_sugar_cookie_shamrock",
+    "particle": "craftycuisine:item/sugar_cookie_shamrock"
+  }
+}

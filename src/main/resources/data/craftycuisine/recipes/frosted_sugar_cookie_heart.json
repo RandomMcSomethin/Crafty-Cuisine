@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "craftycuisine:sugar_cookie_heart"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "item": "craftycuisine:frosted_sugar_cookie_heart",
+    "count": 1
+  }
+}

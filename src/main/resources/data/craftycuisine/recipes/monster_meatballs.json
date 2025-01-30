@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "craftycuisine:cooked_spider_eye"
+    },
+    {
+      "item": "craftycuisine:cooked_spider_eye"
+    },
+    {
+      "item": "craftycuisine:cooked_spider_eye"
+    },
+    {
+      "item": "craftycuisine:sweet_berry_jam"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "craftycuisine:monster_meatballs"
+  }
+}

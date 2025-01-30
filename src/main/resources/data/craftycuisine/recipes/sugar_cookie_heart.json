@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    "#X#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:wheat"
+    },
+    "X": {
+      "item": "minecraft:sugar"
+    },
+    "C": {
+      "item": "craftycuisine:cookie_cutter_heart"
+    }
+  },
+  "result": {
+    "item": "craftycuisine:sugar_cookie_heart",
+    "count": 8
+  }
+}

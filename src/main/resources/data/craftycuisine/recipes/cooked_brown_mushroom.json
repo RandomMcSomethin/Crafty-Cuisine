@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:brown_mushroom"
+  },
+  "result": "craftycuisine:cooked_brown_mushroom",
+  "experience": 0.35,
+  "cookingtime": 200
+}

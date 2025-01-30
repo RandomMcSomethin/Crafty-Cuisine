@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "minecraft:turtle_egg"
+  },
+  "result": "craftycuisine:cooked_turtle_egg",
+  "experience": 0.35,
+  "cookingtime": 600
+}
