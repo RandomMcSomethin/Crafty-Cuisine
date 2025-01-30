@@ -1,36 +1,41 @@
 {
-  "schemaVersion": 1,
-  "id": "craftycuisine",
-  "version": "1.3.0",
-  "name": "Crafty Cuisine",
-  "description": "Adds food centered around expanding the vanilla options.",
-  "authors": ["RandomMcSomethin"],
-  "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/crafty-cuisine-fabric",
-    "sources": "https://github.com/RandomMcSomethin/Crafty-Cuisine",
-    "issues": "https://github.com/RandomMcSomethin/Crafty-Cuisine/issues"
-  },
-  "license": "MIT",
-  "icon": "assets/craftycuisine/icon.png",
-  "environment": "*",
-  "entrypoints": {
-    "client": [
-      "craftycuisine.craftycuisine.client.CraftyCuisineClient"
-    ],
-    "main": [
-      "craftycuisine.craftycuisine.CraftyCuisine"
-    ],
-    "modmenu": [
-      "craftycuisine.craftycuisine.config.ModMenuIntegration"
-    ]
-
-  },
-  "mixins": [
-    "craftycuisine.mixins.json"
-  ],
-  "depends": {
-    "fabricloader": ">=0.14.11",
-    "fabric": "*",
-    "minecraft": "1.20.*"
-  }
+	"schemaVersion": 1,
+	"id": "craftycuisine",
+	"version": "${version}",
+	"name": "Crafty Cuisine",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/craftycuisine/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"io.github.randommcsomethin.craftycuisine.CraftyCuisine"
+		],
+		"client": [
+			"io.github.randommcsomethin.craftycuisine.CraftyCuisineClient"
+		]
+	},
+	"mixins": [
+		"craftycuisine.mixins.json",
+		{
+			"config": "craftycuisine.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
 }
