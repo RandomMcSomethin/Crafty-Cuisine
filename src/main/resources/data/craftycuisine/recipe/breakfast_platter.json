@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "craftycuisine:cooked_egg"
+    },
+    {
+      "item": "craftycuisine:cooked_egg"
+    },
+    {
+      "item": "craftycuisine:cooked_bacon"
+    },
+    {
+      "item": "craftycuisine:cooked_bacon"
+    },
+    {
+      "item": "minecraft:baked_potato"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "id": "craftycuisine:breakfast_platter"
+  }
+}

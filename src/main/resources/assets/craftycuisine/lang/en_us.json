@@ -4,8 +4,8 @@
     "item.craftycuisine.cooked_brown_mushroom": "Roasted Brown Mushroom",
     "item.craftycuisine.cooked_red_mushroom": "Roasted Red Mushroom",
     "item.craftycuisine.cooked_egg": "Fried Egg",
-    "item.craftycuisine.cooked_turtle_egg": "Fried Turtle Egg",
-    "item.craftycuisine.cooked_turtle_egg_tooltip": "No turtles were harmed to make this mod.",
+    "item.craftycuisine.bacon": "Raw Bacon",
+    "item.craftycuisine.cooked_bacon": "Cooked Bacon",
     "item.craftycuisine.apple_pie": "Apple Pie",
     "item.craftycuisine.chocolate_pie": "Chocolate Pie",
     "item.craftycuisine.chorus_pie": "Chorus Pie",
@@ -93,14 +93,15 @@
     "item.craftycuisine.crimson_fungus_stew": "Fungus Stew",
     "item.craftycuisine.warped_fungus_stew": "Fungus Stew",
     "item.craftycuisine.glow_ramen": "Glow Ramen",
-    "item.craftycuisine.bacon": "Raw Bacon",
-    "item.craftycuisine.cooked_bacon": "Cooked Bacon",
+    "item.craftycuisine.breakfast_platter": "Breakfast Platter",
+
     "text.autoconfig.craftycuisine.title": "Crafty Cuisine",
     "text.autoconfig.craftycuisine.category.general": "General",
     "text.autoconfig.craftycuisine.option.fastFood": "Fast Foods",
     "text.autoconfig.craftycuisine.option.fastFood.@Tooltip": "These foods are eaten quickly like dried kelp\nUnexpected behavior may arise if items share food components",
     "text.autoconfig.craftycuisine.option.fishSoupTrade": "Fish Soup Trade",
     "text.autoconfig.craftycuisine.option.fishSoupTrade.@Tooltip": "Fisherman villagers trade fish soup for emeralds",
-    "advancements.craftycuisine.turtle_egg.title": "You Monster!",
-    "advancements.craftycuisine.turtle_egg.description": "Cook and eat a Turtle Egg"
+
+    "advancements.craftycuisine.husbandry.obtain_apple_pie.title": "I’m Gonna Eat It All Before You Even Get There!",
+    "advancements.craftycuisine.husbandry.obtain_apple_pie.description": "Obtain an Apple Pie"
 }

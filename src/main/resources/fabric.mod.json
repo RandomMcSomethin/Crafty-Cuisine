@@ -3,15 +3,14 @@
 	"id": "craftycuisine",
 	"version": "${version}",
 	"name": "Crafty Cuisine",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"Me!"
-	],
+	"description": "Adds food centered around expanding the vanilla options.",
+	"authors": ["RandomMcSomethin"],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/crafty-cuisine-fabric",
+		"sources": "https://github.com/RandomMcSomethin/Crafty-Cuisine",
+		"issues": "https://github.com/RandomMcSomethin/Crafty-Cuisine/issues"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/craftycuisine/icon.png",
 	"environment": "*",
 	"entrypoints": {

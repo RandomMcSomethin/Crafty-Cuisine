@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "craftycuisine:bacon"
+  },
+  "result": {
+    "id": "craftycuisine:cooked_bacon"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

@@ -3,7 +3,7 @@
 	"package": "io.github.randommcsomethin.craftycuisine.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"RecipeRemainderAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1
