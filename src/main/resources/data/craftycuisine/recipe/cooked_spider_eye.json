@@ -3,7 +3,9 @@
   "ingredient": {
     "item": "minecraft:spider_eye"
   },
-  "result": "craftycuisine:cooked_spider_eye",
+  "result": {
+    "id": "craftycuisine:cooked_spider_eye"
+  },
   "experience": 0.35,
   "cookingtime": 200
 }

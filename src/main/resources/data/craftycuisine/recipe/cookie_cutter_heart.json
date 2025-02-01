@@ -3,6 +3,8 @@
   "ingredient": {
     "item": "minecraft:copper_ingot"
   },
-  "result": "craftycuisine:cookie_cutter_heart",
+  "result": {
+    "id": "craftycuisine:cookie_cutter_heart"
+  },
   "count": 1
 }

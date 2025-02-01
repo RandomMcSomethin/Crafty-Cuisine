@@ -1,9 +1,6 @@
 package io.github.randommcsomethin.craftycuisine;
 
-import io.github.randommcsomethin.craftycuisine.item.DrinkableItem;
-import io.github.randommcsomethin.craftycuisine.item.PoisonCureItem;
-import io.github.randommcsomethin.craftycuisine.item.SelfRemainderItem;
-import io.github.randommcsomethin.craftycuisine.item.TooltippedItem;
+import io.github.randommcsomethin.craftycuisine.item.*;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -38,6 +35,30 @@ public class CraftyCuisine implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+	// reused food components
+	public static final FoodComponent FROSTED_COOKIE_FOOD = new FoodComponent.Builder().nutrition(2).saturationModifier(0.25F).snack().build();
+
+	public static final StatusEffect[] COD_SURPRISE_STATUS_EFFECTS = {
+				StatusEffects.HASTE.value(),
+				StatusEffects.REGENERATION.value(),
+				StatusEffects.JUMP_BOOST.value(),
+				StatusEffects.RESISTANCE.value(),
+				StatusEffects.STRENGTH.value(),
+				StatusEffects.DOLPHINS_GRACE.value(),
+				StatusEffects.INVISIBILITY.value(),
+				StatusEffects.NIGHT_VISION.value(),
+				StatusEffects.WATER_BREATHING.value()
+	};
+
+	public static final StatusEffect[] WARPED_FUNGUS_STEW_STATUS_EFFECTS = {
+			StatusEffects.REGENERATION.value(),
+			StatusEffects.FIRE_RESISTANCE.value(),
+			StatusEffects.HASTE.value(),
+			StatusEffects.POISON.value(),
+			StatusEffects.BLINDNESS.value(),
+			StatusEffects.WEAKNESS.value()
+	};
 
 	// items
 	// cooked foods
@@ -89,9 +110,9 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Item HONEY_BREAD = registerItem(new PoisonCureItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F).build())), "honey_bread");
 	// cookies
 	public static final Item SUGAR_COOKIE = registerItem(new Item(new Item.Settings().food(FoodComponents.COOKIE)), "sugar_cookie");
-	public static final Item FROSTED_SUGAR_COOKIE = registerItem(new Item(new Item.Settings().food(FoodComponents.COOKIE)), "frosted_sugar_cookie");
-	public static final Item PUMPKIN_COOKIE = registerItem(new Item(new Item.Settings().food(FoodComponents.COOKIE)), "pumpkin_cookie");
-	public static final Item FROSTED_PUMPKIN_COOKIE = registerItem(new Item(new Item.Settings().food(FoodComponents.COOKIE)), "frosted_pumpkin_cookie");
+	public static final Item FROSTED_SUGAR_COOKIE = registerItem(new Item(new Item.Settings().food(FROSTED_COOKIE_FOOD)), "frosted_sugar_cookie");
+	public static final Item PUMPKIN_COOKIE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(3).saturationModifier(0.4F).snack().build())), "pumpkin_cookie");
+	public static final Item FROSTED_PUMPKIN_COOKIE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(4).saturationModifier(0.4F).snack().build())), "frosted_pumpkin_cookie");
 	public static final Item SUGAR_COOKIE_SQUARE = registerSugarCookie("square", false);
 	public static final Item FROSTED_SUGAR_COOKIE_SQUARE = registerSugarCookie("square", true);
 	public static final Item SUGAR_COOKIE_STAR = registerSugarCookie("star", false);
@@ -156,9 +177,10 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Item CRIMSON_FUNGUS_STEW = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(5).saturationModifier(0.6F)
 					.usingConvertsTo(Items.BOWL).build())
 			.maxCount(1)), "crimson_fungus_stew");
-	public static final Item WARPED_FUNGUS_STEW = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(5).saturationModifier(0.6F)
+	public static final Item WARPED_FUNGUS_STEW = registerItem(new RandomPotionEffectItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(5).saturationModifier(0.6F)
 					.usingConvertsTo(Items.BOWL).build())
-			.maxCount(1)), "warped_fungus_stew");
+			.maxCount(1),
+			WARPED_FUNGUS_STEW_STATUS_EFFECTS), "warped_fungus_stew");
     public static final Item GLOW_RAMEN = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(10).saturationModifier(0.6F)
                     .usingConvertsTo(Items.BOWL)
                     .statusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 600), 1.0F)
@@ -172,9 +194,9 @@ public class CraftyCuisine implements ModInitializer {
                     .usingConvertsTo(Items.BOWL)
                     .statusEffect(new StatusEffectInstance(StatusEffects.LUCK, 3600), 1.0F).build())
             .maxCount(1)), "seafoam_pudding");
-	public static final Item COD_SURPRISE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F)
+	public static final Item COD_SURPRISE = registerItem(new RandomPotionEffectItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F)
 					.usingConvertsTo(Items.BOWL).build())
-			.maxCount(1)), "cod_surprise");
+			.maxCount(1), COD_SURPRISE_STATUS_EFFECTS), "cod_surprise");
 
 	// prepared meals
 	public static final Item BREAKFAST_PLATTER = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(10).saturationModifier(0.6F)
@@ -250,7 +272,7 @@ public class CraftyCuisine implements ModInitializer {
 		FoodComponent food = FoodComponents.COOKIE;
 		if (frosted) {
 			cookieName = "frosted_".concat(cookieName);
-			food = FoodComponents.COOKIE;
+			food = FROSTED_COOKIE_FOOD;
 		}
 
 		return registerItem(new TooltippedItem(new Item.Settings().food(food), List.of(Text.translatable("item.craftycuisine.".concat(cookieName).concat("_tooltip")).formatted(Formatting.GRAY))), cookieName);
