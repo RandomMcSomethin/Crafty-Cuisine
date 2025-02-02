@@ -1,25 +1,22 @@
 package io.github.randommcsomethin.craftycuisine.item;
 
-import net.minecraft.component.type.DyedColorComponent;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.List;
 
-public class TooltippedItem extends Item {
-    private final List<Text> tooltips;
-
-    public TooltippedItem(Settings settings, List<Text> tooltips) {
+public class CookieCutterItem extends SelfRemainderItem {
+    private final String type;
+    public CookieCutterItem(Settings settings, String type) {
         super(settings);
-        this.tooltips = tooltips;
+        this.type = type;
     }
-
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-        tooltip.addAll(tooltips);
+        tooltip.add(Text.translatable("item.craftycuisine.cookie_cutter_".concat(this.type).concat("_tooltip")).formatted(Formatting.GRAY));
     }
 }

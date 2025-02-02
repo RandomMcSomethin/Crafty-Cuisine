@@ -1,5 +1,6 @@
 package io.github.randommcsomethin.craftycuisine;
 
+import io.github.randommcsomethin.craftycuisine.effect.SweetToothEffect;
 import io.github.randommcsomethin.craftycuisine.item.*;
 import net.fabricmc.api.ModInitializer;
 
@@ -19,6 +20,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.stat.Stat;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -39,18 +42,21 @@ public class CraftyCuisine implements ModInitializer {
 	// reused food components
 	public static final FoodComponent FROSTED_COOKIE_FOOD = new FoodComponent.Builder().nutrition(2).saturationModifier(0.25F).snack().build();
 
-	public static final StatusEffect[] COD_SURPRISE_STATUS_EFFECTS = {
-				StatusEffects.HASTE.value(),
-				StatusEffects.REGENERATION.value(),
-				StatusEffects.JUMP_BOOST.value(),
-				StatusEffects.RESISTANCE.value(),
-				StatusEffects.STRENGTH.value(),
-				StatusEffects.DOLPHINS_GRACE.value(),
-				StatusEffects.INVISIBILITY.value(),
-				StatusEffects.NIGHT_VISION.value(),
-				StatusEffects.WATER_BREATHING.value()
-	};
+	// status effects
+	public static final RegistryEntry<StatusEffect> SWEET_TOOTH_EFFECT = registerStatusEffect("sweet_tooth", new SweetToothEffect());
 
+	// variables
+	public static final StatusEffect[] COD_SURPRISE_STATUS_EFFECTS = {
+			StatusEffects.HASTE.value(),
+			StatusEffects.REGENERATION.value(),
+			StatusEffects.JUMP_BOOST.value(),
+			StatusEffects.RESISTANCE.value(),
+			StatusEffects.STRENGTH.value(),
+			StatusEffects.DOLPHINS_GRACE.value(),
+			StatusEffects.INVISIBILITY.value(),
+			StatusEffects.NIGHT_VISION.value(),
+			StatusEffects.WATER_BREATHING.value()
+	};
 	public static final StatusEffect[] WARPED_FUNGUS_STEW_STATUS_EFFECTS = {
 			StatusEffects.REGENERATION.value(),
 			StatusEffects.FIRE_RESISTANCE.value(),
@@ -92,11 +98,12 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Item CANDIED_MELON_SLICE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(1)
 			.usingConvertsTo(Items.STICK).build())), "candied_melon_slice");
 	public static final Item SWEET_BERRY_CANDY = registerItem(new DrinkableItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(10).saturationModifier(1.2F)
-			.statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 300), 1.0F)
+			.statusEffect(new StatusEffectInstance(SWEET_TOOTH_EFFECT, 600, 1), 1.0F)
 			.usingConvertsTo(Items.GLASS_BOTTLE).build()).recipeRemainder(Items.GLASS_BOTTLE)), "sweet_berry_candy");
 	// jams and breads
 	public static final Item SWEET_BERRY_JAM = registerItem(new DrinkableItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.15F)
-			.usingConvertsTo(Items.GLASS_BOTTLE).build())
+			.usingConvertsTo(Items.GLASS_BOTTLE)
+			.statusEffect(new StatusEffectInstance(SWEET_TOOTH_EFFECT, 300), 1.0F).build())
 			.maxCount(16)
 			.recipeRemainder(Items.GLASS_BOTTLE)), "sweet_berry_jam");
 	public static final Item GLOW_BERRY_JAM = registerItem(new DrinkableItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.15F)
@@ -104,7 +111,8 @@ public class CraftyCuisine implements ModInitializer {
 			.statusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 300), 1.0F).build())
 			.maxCount(16)
 			.recipeRemainder(Items.GLASS_BOTTLE)), "glow_berry_jam");
-	public static final Item SWEET_BERRY_BREAD = registerItem(new PoisonCureItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F).build())), "sweet_berry_bread");
+	public static final Item SWEET_BERRY_BREAD = registerItem(new PoisonCureItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F)
+			.statusEffect(new StatusEffectInstance(SWEET_TOOTH_EFFECT, 600), 1.0F).build())), "sweet_berry_bread");
 	public static final Item GLOW_BERRY_BREAD = registerItem(new PoisonCureItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 600), 1.0F).build())), "glow_berry_bread");
 	public static final Item HONEY_BREAD = registerItem(new PoisonCureItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F).build())), "honey_bread");
@@ -128,13 +136,13 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Item SUGAR_COOKIE_EGG = registerSugarCookie("egg", false);
 	public static final Item FROSTED_SUGAR_COOKIE_EGG = registerSugarCookie("egg", true);
 	// cookie cutters
-	public static final Item COOKIE_CUTTER_SQUARE = registerItem(new SelfRemainderItem(new Item.Settings()), "cookie_cutter_square");
-	public static final Item COOKIE_CUTTER_STAR = registerItem(new SelfRemainderItem(new Item.Settings()), "cookie_cutter_star");
-	public static final Item COOKIE_CUTTER_TREE = registerItem(new SelfRemainderItem(new Item.Settings()), "cookie_cutter_tree");
-	public static final Item COOKIE_CUTTER_CREEPER = registerItem(new SelfRemainderItem(new Item.Settings()), "cookie_cutter_creeper");
-	public static final Item COOKIE_CUTTER_HEART = registerItem(new SelfRemainderItem(new Item.Settings()), "cookie_cutter_heart");
-	public static final Item COOKIE_CUTTER_SHAMROCK = registerItem(new SelfRemainderItem(new Item.Settings()), "cookie_cutter_shamrock");
-	public static final Item COOKIE_CUTTER_EGG = registerItem(new SelfRemainderItem(new Item.Settings()), "cookie_cutter_egg");
+	public static final Item COOKIE_CUTTER_SQUARE = registerItem(new CookieCutterItem(new Item.Settings(), "square"), "cookie_cutter_square");
+	public static final Item COOKIE_CUTTER_STAR = registerItem(new CookieCutterItem(new Item.Settings(), "star"), "cookie_cutter_star");
+	public static final Item COOKIE_CUTTER_TREE = registerItem(new CookieCutterItem(new Item.Settings(), "tree"), "cookie_cutter_tree");
+	public static final Item COOKIE_CUTTER_CREEPER = registerItem(new CookieCutterItem(new Item.Settings(), "creeper"), "cookie_cutter_creeper");
+	public static final Item COOKIE_CUTTER_HEART = registerItem(new CookieCutterItem(new Item.Settings(), "heart"), "cookie_cutter_heart");
+	public static final Item COOKIE_CUTTER_SHAMROCK = registerItem(new CookieCutterItem(new Item.Settings(), "shamrock"), "cookie_cutter_shamrock");
+	public static final Item COOKIE_CUTTER_EGG = registerItem(new CookieCutterItem(new Item.Settings(), "egg"), "cookie_cutter_egg");
 	// pies
 	public static final Item APPLE_PIE = registerItem(new Item(new Item.Settings().food(FoodComponents.PUMPKIN_PIE)), "apple_pie");
 	public static final Item CHOCOLATE_PIE = registerItem(new Item(new Item.Settings().food(FoodComponents.PUMPKIN_PIE)), "chocolate_pie");
@@ -157,7 +165,7 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Item PUMPKIN_ICE_CREAM = registerItem(new Item(new Item.Settings()
 			.food(createIceCream(StatusEffects.RESISTANCE, 1200).build()).maxCount(1)), "pumpkin_ice_cream");
 	public static final Item SWEET_BERRY_ICE_CREAM = registerItem(new Item(new Item.Settings()
-			.food(createIceCream(StatusEffects.SPEED, 1200).build()).maxCount(1)), "sweet_berry_ice_cream");
+			.food(createIceCream(SWEET_TOOTH_EFFECT, 1200).build()).maxCount(1)), "sweet_berry_ice_cream");
 	public static final Item GLOW_BERRY_ICE_CREAM = registerItem(new Item(new Item.Settings()
 			.food(createIceCream(StatusEffects.GLOWING, 1200).build()).maxCount(1)), "glow_berry_ice_cream");
 	public static final Item HONEY_ICE_CREAM = registerItem(new PoisonCureItem(new Item.Settings()
@@ -254,6 +262,10 @@ public class CraftyCuisine implements ModInitializer {
 		return Registry.register(Registries.ITEM, Identifier.of(MOD_ID, id), item);
 	}
 
+	public static RegistryEntry<StatusEffect> registerStatusEffect(String id, StatusEffect effect) {
+		return Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, id), effect);
+	}
+
 	public static FoodComponent.Builder createIceCream() {
 		return new FoodComponent.Builder().nutrition(3).saturationModifier(0.3F);
 	}
@@ -275,6 +287,6 @@ public class CraftyCuisine implements ModInitializer {
 			food = FROSTED_COOKIE_FOOD;
 		}
 
-		return registerItem(new TooltippedItem(new Item.Settings().food(food), List.of(Text.translatable("item.craftycuisine.".concat(cookieName).concat("_tooltip")).formatted(Formatting.GRAY))), cookieName);
+		return registerItem(new TooltippedItem(new Item.Settings().food(food), List.of(Text.translatable("item.craftycuisine.".concat(cookieName).concat("_tooltip")).formatted(Formatting.AQUA))), cookieName);
 	}
 }

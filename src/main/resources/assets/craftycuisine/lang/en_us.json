@@ -43,14 +43,21 @@
     "item.craftycuisine.monster_meatballs": "Monster Meatballs",
     "item.craftycuisine.monster_manicotti": "Monster Manicotti",
     "item.craftycuisine.monster_manicotti_tooltip": "Please don't.",
-    "item.craftycuisine.cookie_cutter_square": "Cookie Cutter (Square)",
-    "item.craftycuisine.cookie_cutter_star": "Cookie Cutter (Star)",
-    "item.craftycuisine.cookie_cutter_tree": "Cookie Cutter (Tree)",
-    "item.craftycuisine.cookie_cutter_creeper": "Cookie Cutter (Creeper)",
+    "item.craftycuisine.cookie_cutter_square": "Cookie Cutter",
+    "item.craftycuisine.cookie_cutter_square_tooltip": "Square",
+    "item.craftycuisine.cookie_cutter_star": "Cookie Cutter",
+    "item.craftycuisine.cookie_cutter_star_tooltip": "Star",
+    "item.craftycuisine.cookie_cutter_tree": "Cookie Cutter",
+    "item.craftycuisine.cookie_cutter_tree_tooltip": "Tree",
+    "item.craftycuisine.cookie_cutter_creeper": "Cookie Cutter",
+    "item.craftycuisine.cookie_cutter_creeper_tooltip": "Creeper",
 
-    "item.craftycuisine.cookie_cutter_heart": "Cookie Cutter (Heart)",
-    "item.craftycuisine.cookie_cutter_shamrock": "Cookie Cutter (Shamrock)",
-    "item.craftycuisine.cookie_cutter_egg": "Cookie Cutter (Egg)",
+    "item.craftycuisine.cookie_cutter_heart": "Cookie Cutter",
+    "item.craftycuisine.cookie_cutter_heart_tooltip": "Heart",
+    "item.craftycuisine.cookie_cutter_shamrock": "Cookie Cutter",
+    "item.craftycuisine.cookie_cutter_shamrock_tooltip": "Shamrock",
+    "item.craftycuisine.cookie_cutter_egg": "Cookie Cutter",
+    "item.craftycuisine.cookie_cutter_egg_tooltip": "Egg",
 
     "item.craftycuisine.sugar_cookie": "Sugar Cookie",
     "item.craftycuisine.frosted_sugar_cookie": "Frosted Sugar Cookie",
@@ -103,5 +110,7 @@
     "text.autoconfig.craftycuisine.option.fishSoupTrade.@Tooltip": "Fisherman villagers trade fish soup for emeralds",
 
     "advancements.craftycuisine.husbandry.obtain_apple_pie.title": "I’m Gonna Eat It All Before You Even Get There!",
-    "advancements.craftycuisine.husbandry.obtain_apple_pie.description": "Obtain an Apple Pie"
+    "advancements.craftycuisine.husbandry.obtain_apple_pie.description": "Obtain an Apple Pie",
+
+    "effect.craftycuisine.sweet_tooth": "Sweet Tooth"
 }
