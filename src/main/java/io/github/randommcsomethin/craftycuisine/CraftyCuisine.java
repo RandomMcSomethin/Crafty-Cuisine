@@ -1,5 +1,7 @@
 package io.github.randommcsomethin.craftycuisine;
 
+import io.github.randommcsomethin.craftycuisine.effect.AntidoteEffect;
+import io.github.randommcsomethin.craftycuisine.effect.MagnetismEffect;
 import io.github.randommcsomethin.craftycuisine.effect.SweetToothEffect;
 import io.github.randommcsomethin.craftycuisine.item.*;
 import net.fabricmc.api.ModInitializer;
@@ -44,6 +46,8 @@ public class CraftyCuisine implements ModInitializer {
 
 	// status effects
 	public static final RegistryEntry<StatusEffect> SWEET_TOOTH_EFFECT = registerStatusEffect("sweet_tooth", new SweetToothEffect());
+	public static final RegistryEntry<StatusEffect> MAGNETISM_EFFECT = registerStatusEffect("magnetism", new MagnetismEffect());
+	public static final RegistryEntry<StatusEffect> ANTIDOTE_EFFECT = registerStatusEffect("antidote", new AntidoteEffect());
 
 	// variables
 	public static final StatusEffect[] COD_SURPRISE_STATUS_EFFECTS = {
@@ -155,7 +159,8 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Item ICE_CREAM = registerItem(new Item(new Item.Settings()
 			.food(createIceCream().build()).maxCount(1)), "ice_cream");
 	public static final Item APPLE_ICE_CREAM = registerItem(new Item(new Item.Settings()
-			.food(createIceCream(StatusEffects.HASTE, 1200).build()).maxCount(1)), "apple_ice_cream");
+			.food(createIceCream(StatusEffects.HASTE, 1200)
+			.statusEffect(new StatusEffectInstance(MAGNETISM_EFFECT, 1200), 1.0F).build()).maxCount(1)), "apple_ice_cream");
 	public static final Item CHOCOLATE_ICE_CREAM = registerItem(new Item(new Item.Settings()
 			.food(createIceCream(StatusEffects.REGENERATION, 1200).build()).maxCount(1)), "chocolate_ice_cream");
 	public static final Item MELON_ICE_CREAM = registerItem(new Item(new Item.Settings()
@@ -169,7 +174,7 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Item GLOW_BERRY_ICE_CREAM = registerItem(new Item(new Item.Settings()
 			.food(createIceCream(StatusEffects.GLOWING, 1200).build()).maxCount(1)), "glow_berry_ice_cream");
 	public static final Item HONEY_ICE_CREAM = registerItem(new PoisonCureItem(new Item.Settings()
-			.food(createIceCream(true).build()).maxCount(1)), "honey_ice_cream");
+			.food(createIceCream(ANTIDOTE_EFFECT, 1200).build()).maxCount(1)), "honey_ice_cream");
 	// soups and stews
 	public static final Item CHOCOLATE_PUDDING = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(5).saturationModifier(0.6F)
 			.usingConvertsTo(Items.BOWL)
@@ -210,6 +215,10 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Item BREAKFAST_PLATTER = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(10).saturationModifier(0.6F)
 			.usingConvertsTo(Items.BOWL).build())
 			.maxCount(1)), "breakfast_platter");
+	public static final Item GLAZED_CARROTS = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(7).saturationModifier(0.6F)
+			.usingConvertsTo(Items.BOWL)
+			.statusEffect(new StatusEffectInstance(ANTIDOTE_EFFECT, 600), 1.0F).build())
+			.maxCount(1)), "glazed_carrots");
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -229,7 +238,7 @@ public class CraftyCuisine implements ModInitializer {
 					APPLE_PIE, CHOCOLATE_PIE, CHORUS_PIE, MELON_PIE);
 			itemGroup.addAfter(Items.PUMPKIN_PIE, SWEET_BERRY_PIE, GLOW_BERRY_PIE);
 			itemGroup.addAfter(Items.COOKED_PORKCHOP, RAW_BACON, COOKED_BACON);
-			itemGroup.addBefore(Items.MILK_BUCKET, BREAKFAST_PLATTER);
+			itemGroup.addBefore(Items.MILK_BUCKET, BREAKFAST_PLATTER, GLAZED_CARROTS);
 			itemGroup.addAfter(Items.MUSHROOM_STEW, CRIMSON_FUNGUS_STEW, WARPED_FUNGUS_STEW, CHOCOLATE_PUDDING, CACTUS_SOUP, ROOT_RISOTTO);
 			itemGroup.addBefore(Items.RABBIT_STEW, FISH_SOUP, SEAFOAM_PUDDING, COD_SURPRISE, GLOW_RAMEN);
 			itemGroup.addAfter(Items.PUFFERFISH, SUSHI, SALMON_CAKES);

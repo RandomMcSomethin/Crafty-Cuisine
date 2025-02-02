@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "craftycuisine:cooked_carrot"
+    },
+    {
+      "item": "craftycuisine:cooked_carrot"
+    },
+    {
+      "item": "craftycuisine:cooked_carrot"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+  "result": {
+    "id": "craftycuisine:glazed_carrots"
+  }
+}

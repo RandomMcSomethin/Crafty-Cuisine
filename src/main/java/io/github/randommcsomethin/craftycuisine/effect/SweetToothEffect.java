@@ -27,8 +27,10 @@ public class SweetToothEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (entity.getAttacking() instanceof LivingEntity && !entity.getAttacking().getType().isIn(TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CraftyCuisine.MOD_ID, "cannot_activate_sweet_tooth"))) && (entity.age - entity.getLastAttackTime()) == 1) {
-            entity.heal(2.0F + amplifier);
+        if (!entity.getWorld().isClient()) {
+            if (entity.getAttacking() instanceof LivingEntity && !entity.getAttacking().getType().isIn(TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CraftyCuisine.MOD_ID, "cannot_activate_sweet_tooth"))) && (entity.age - entity.getLastAttackTime()) == 1) {
+                entity.heal(2.0F + amplifier);
+            }
         }
         return super.applyUpdateEffect(entity, amplifier);
     }

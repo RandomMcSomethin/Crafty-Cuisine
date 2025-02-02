@@ -101,6 +101,7 @@
     "item.craftycuisine.warped_fungus_stew": "Fungus Stew",
     "item.craftycuisine.glow_ramen": "Glow Ramen",
     "item.craftycuisine.breakfast_platter": "Breakfast Platter",
+    "item.craftycuisine.glazed_carrots": "Glazed Carrots",
 
     "text.autoconfig.craftycuisine.title": "Crafty Cuisine",
     "text.autoconfig.craftycuisine.category.general": "General",
@@ -112,5 +113,7 @@
     "advancements.craftycuisine.husbandry.obtain_apple_pie.title": "I’m Gonna Eat It All Before You Even Get There!",
     "advancements.craftycuisine.husbandry.obtain_apple_pie.description": "Obtain an Apple Pie",
 
-    "effect.craftycuisine.sweet_tooth": "Sweet Tooth"
+    "effect.craftycuisine.sweet_tooth": "Sweet Tooth",
+    "effect.craftycuisine.magnetism": "Magnetism",
+    "effect.craftycuisine.antidote": "Antidote"
 }
