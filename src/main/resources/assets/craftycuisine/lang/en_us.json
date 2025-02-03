@@ -1,5 +1,6 @@
 {
     "item.craftycuisine.cooked_carrot": "Roasted Carrot",
+    "item.craftycuisine.cooked_beetroot": "Roasted Beetroot",
     "item.craftycuisine.baked_apple": "Baked Apple",
     "item.craftycuisine.cooked_brown_mushroom": "Roasted Brown Mushroom",
     "item.craftycuisine.cooked_red_mushroom": "Roasted Red Mushroom",
@@ -102,6 +103,8 @@
     "item.craftycuisine.glow_ramen": "Glow Ramen",
     "item.craftycuisine.breakfast_platter": "Breakfast Platter",
     "item.craftycuisine.glazed_carrots": "Glazed Carrots",
+    "item.craftycuisine.chutney": "Chutney",
+    "item.craftycuisine.mixed_pickles": "Mixed Pickles",
 
     "text.autoconfig.craftycuisine.title": "Crafty Cuisine",
     "text.autoconfig.craftycuisine.category.general": "General",

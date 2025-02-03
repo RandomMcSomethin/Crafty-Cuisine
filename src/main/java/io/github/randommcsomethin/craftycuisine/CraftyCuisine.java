@@ -73,6 +73,7 @@ public class CraftyCuisine implements ModInitializer {
 	// items
 	// cooked foods
 	public static final Item COOKED_CARROT = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(4).saturationModifier(1).build())), "cooked_carrot");
+	public static final Item COOKED_BEETROOT = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(4).saturationModifier(1).build())), "cooked_beetroot");
 	public static final Item BAKED_APPLE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(5).saturationModifier(1).build())), "baked_apple");
 	public static final Item COOKED_BROWN_MUSHROOM = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().snack().nutrition(1).saturationModifier(1).build())), "cooked_brown_mushroom");
 	public static final Item COOKED_RED_MUSHROOM = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().snack().nutrition(2).saturationModifier(0.5F).build())), "cooked_red_mushroom");
@@ -210,6 +211,17 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Item COD_SURPRISE = registerItem(new RandomPotionEffectItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F)
 					.usingConvertsTo(Items.BOWL).build())
 			.maxCount(1), COD_SURPRISE_STATUS_EFFECTS), "cod_surprise");
+	public static final Item CHUTNEY = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(8).saturationModifier(0.6F)
+					.usingConvertsTo(Items.BOWL)
+					.statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 1200), 1.0F)
+					.statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 600), 1.0F)
+					.build())
+			.maxCount(1)), "chutney");
+	public static final Item MIXED_PICKLES = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(8).saturationModifier(0.6F)
+					.usingConvertsTo(Items.GLASS_BOTTLE)
+					.statusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 2400), 1.0F)
+					.statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 600), 1.0F)
+					.build())), "mixed_pickles");
 
 	// prepared meals
 	public static final Item BREAKFAST_PLATTER = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(10).saturationModifier(0.6F)
@@ -219,6 +231,7 @@ public class CraftyCuisine implements ModInitializer {
 			.usingConvertsTo(Items.BOWL)
 			.statusEffect(new StatusEffectInstance(ANTIDOTE_EFFECT, 600), 1.0F).build())
 			.maxCount(1)), "glazed_carrots");
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -229,7 +242,7 @@ public class CraftyCuisine implements ModInitializer {
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register((itemGroup -> {
 			itemGroup.addAfter(Items.CARROT, COOKED_CARROT);
 			itemGroup.addAfter(Items.APPLE, BAKED_APPLE);
-			itemGroup.addAfter(Items.BEETROOT, COOKED_EGG, COOKED_BROWN_MUSHROOM, COOKED_RED_MUSHROOM);
+			itemGroup.addAfter(Items.BEETROOT, COOKED_BEETROOT, COOKED_EGG, COOKED_BROWN_MUSHROOM, COOKED_RED_MUSHROOM);
 			itemGroup.addAfter(Items.HONEY_BOTTLE, SWEET_BERRY_JAM, GLOW_BERRY_JAM);
 			itemGroup.addAfter(Items.BREAD, SWEET_BERRY_BREAD, GLOW_BERRY_BREAD, HONEY_BREAD);
 			itemGroup.addAfter(Items.COOKED_MUTTON, SHEPHERDS_PIE);
@@ -238,8 +251,9 @@ public class CraftyCuisine implements ModInitializer {
 					APPLE_PIE, CHOCOLATE_PIE, CHORUS_PIE, MELON_PIE);
 			itemGroup.addAfter(Items.PUMPKIN_PIE, SWEET_BERRY_PIE, GLOW_BERRY_PIE);
 			itemGroup.addAfter(Items.COOKED_PORKCHOP, RAW_BACON, COOKED_BACON);
-			itemGroup.addBefore(Items.MILK_BUCKET, BREAKFAST_PLATTER, GLAZED_CARROTS);
+			itemGroup.addBefore(Items.MILK_BUCKET, BREAKFAST_PLATTER, GLAZED_CARROTS, MIXED_PICKLES);
 			itemGroup.addAfter(Items.MUSHROOM_STEW, CRIMSON_FUNGUS_STEW, WARPED_FUNGUS_STEW, CHOCOLATE_PUDDING, CACTUS_SOUP, ROOT_RISOTTO);
+			itemGroup.addAfter(Items.BEETROOT_SOUP, CHUTNEY);
 			itemGroup.addBefore(Items.RABBIT_STEW, FISH_SOUP, SEAFOAM_PUDDING, COD_SURPRISE, GLOW_RAMEN);
 			itemGroup.addAfter(Items.PUFFERFISH, SUSHI, SALMON_CAKES);
 			itemGroup.addBefore(Items.COOKIE, CANDIED_APPLE, CANDIED_CHORUS_FRUIT, CANDIED_MELON_SLICE, SWEET_BERRY_CANDY);

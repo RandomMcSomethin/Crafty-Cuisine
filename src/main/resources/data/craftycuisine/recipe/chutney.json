@@ -1,7 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "group": "sugar",
   "ingredients": [
     {
       "item": "minecraft:beetroot"
@@ -11,10 +9,18 @@
     },
     {
       "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:bowl"
     }
   ],
   "result": {
-    "count": 3,
-    "id": "minecraft:sugar"
+    "id": "craftycuisine:chutney"
   }
 }
