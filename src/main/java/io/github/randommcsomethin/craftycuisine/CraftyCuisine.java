@@ -231,6 +231,10 @@ public class CraftyCuisine implements ModInitializer {
 			.usingConvertsTo(Items.BOWL)
 			.statusEffect(new StatusEffectInstance(ANTIDOTE_EFFECT, 600), 1.0F).build())
 			.maxCount(1)), "glazed_carrots");
+	public static final Item HONEY_FLAN = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(8).saturationModifier(0.3F)
+					.usingConvertsTo(Items.BOWL)
+					.statusEffect(new StatusEffectInstance(ANTIDOTE_EFFECT, 2400, 1), 1.0F).build())
+			.maxCount(1)), "honey_flan");
 
 	@Override
 	public void onInitialize() {
@@ -252,6 +256,7 @@ public class CraftyCuisine implements ModInitializer {
 			itemGroup.addAfter(Items.PUMPKIN_PIE, SWEET_BERRY_PIE, GLOW_BERRY_PIE);
 			itemGroup.addAfter(Items.COOKED_PORKCHOP, RAW_BACON, COOKED_BACON);
 			itemGroup.addBefore(Items.MILK_BUCKET, BREAKFAST_PLATTER, GLAZED_CARROTS, MIXED_PICKLES);
+			itemGroup.addAfter(Items.MILK_BUCKET, HONEY_FLAN);
 			itemGroup.addAfter(Items.MUSHROOM_STEW, CRIMSON_FUNGUS_STEW, WARPED_FUNGUS_STEW, CHOCOLATE_PUDDING, CACTUS_SOUP, ROOT_RISOTTO);
 			itemGroup.addAfter(Items.BEETROOT_SOUP, CHUTNEY);
 			itemGroup.addBefore(Items.RABBIT_STEW, FISH_SOUP, SEAFOAM_PUDDING, COD_SURPRISE, GLOW_RAMEN);

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:milk_bucket"
+    },
+    "B": {
+      "item": "minecraft:sugar"
+    },
+    "C": {
+      "item": "minecraft:honey_bottle"
+    },
+    "E": {
+      "item": "minecraft:egg"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "BEB",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "craftycuisine:honey_flan"
+  }
+}

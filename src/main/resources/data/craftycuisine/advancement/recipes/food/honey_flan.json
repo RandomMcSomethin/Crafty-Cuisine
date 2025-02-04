@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_honey_bottle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:honey_bottle"
+            ]
+          }
+        ]
+      }
+    },
+    "has_milk_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:milk_bucket"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "craftycuisine:honey_flan"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_honey_bottle",
+      "has_milk_bucket",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "craftycuisine:honey_flan"
+    ]
+  }
+}
