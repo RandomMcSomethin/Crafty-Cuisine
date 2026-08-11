@@ -24,7 +24,6 @@ public class AntidoteEffect extends StatusEffect {
         if (!entity.getWorld().isClient()) {
             entity.removeStatusEffect(StatusEffects.POISON);
             entity.removeStatusEffect(StatusEffects.WEAKNESS);
-            entity.removeStatusEffect(StatusEffects.SLOWNESS);
             entity.removeStatusEffect(StatusEffects.HUNGER);
             entity.removeStatusEffect(StatusEffects.NAUSEA);
             if (amplifier > 0) {

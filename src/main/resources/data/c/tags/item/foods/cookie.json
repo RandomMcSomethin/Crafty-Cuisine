@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "craftycuisine:sugar_cookie",
+    "craftycuisine:sugar_cookie_square",
+    "craftycuisine:sugar_cookie_star",
+    "craftycuisine:sugar_cookie_tree",
+    "craftycuisine:sugar_cookie_creeper",
+    "craftycuisine:sugar_cookie_heart",
+    "craftycuisine:sugar_cookie_shamrock",
+    "craftycuisine:sugar_cookie_egg",
+    "craftycuisine:frosted_sugar_cookie",
+    "craftycuisine:frosted_sugar_cookie_square",
+    "craftycuisine:frosted_sugar_cookie_star",
+    "craftycuisine:frosted_sugar_cookie_tree",
+    "craftycuisine:frosted_sugar_cookie_creeper",
+    "craftycuisine:frosted_sugar_cookie_heart",
+    "craftycuisine:frosted_sugar_cookie_shamrock",
+    "craftycuisine:frosted_sugar_cookie_egg",
+    "craftycuisine:pumpkin_cookie",
+    "craftycuisine:frosted_pumpkin_cookie"
+  ]
+}

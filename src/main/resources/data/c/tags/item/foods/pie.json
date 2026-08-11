@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:pumpkin_pie",
+    "craftycuisine:shepherds_pie",
+    "craftycuisine:apple_pie",
+    "craftycuisine:chocolate_pie",
+    "craftycuisine:chorus_pie",
+    "craftycuisine:melon_pie",
+    "craftycuisine:sweet_berry_pie",
+    "craftycuisine:glow_berry_pie"
+  ]
+}

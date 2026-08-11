@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "craftycuisine:glow_berry_bread",
+    "craftycuisine:sweet_berry_bread",
+    "craftycuisine:cooked_spider_eye",
+    "craftycuisine:salmon_cakes",
+    "craftycuisine:breakfast_platter",
+    "craftycuisine:glazed_carrots",
+    "craftycuisine:honey_flan",
+    "craftycuisine:baked_apple",
+    "craftycuisine:cooked_carrot",
+    "craftycuisine:cooked_beetroot",
+    "craftycuisine:cooked_red_mushroom",
+    "craftycuisine:cooked_brown_mushroom"
+  ]
+}

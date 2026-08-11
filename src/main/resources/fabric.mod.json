@@ -19,6 +19,9 @@
 		],
 		"client": [
 			"io.github.randommcsomethin.craftycuisine.CraftyCuisineClient"
+		],
+		"modmenu": [
+			"io.github.randommcsomethin.craftycuisine.modmenu.ModMenuIntegration"
 		]
 	},
 	"mixins": [

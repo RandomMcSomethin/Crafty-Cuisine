@@ -12,6 +12,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,11 +28,14 @@ public class SweetToothEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+        /*
         if (!entity.getWorld().isClient()) {
             if (entity.getAttacking() instanceof LivingEntity && !entity.getAttacking().getType().isIn(TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CraftyCuisine.MOD_ID, "cannot_activate_sweet_tooth"))) && (entity.age - entity.getLastAttackTime()) == 1) {
                 entity.heal(2.0F + amplifier);
+                entity.getWorld().playSound(null, entity.getBlockPos(), CraftyCuisine.LIFESTEAL, SoundCategory.PLAYERS, 0.75f, (float) (Math.random()/10f + 0.9f));
             }
         }
+        */
         return super.applyUpdateEffect(entity, amplifier);
     }
 }

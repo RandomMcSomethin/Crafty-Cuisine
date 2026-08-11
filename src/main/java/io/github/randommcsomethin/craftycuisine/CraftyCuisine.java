@@ -1,36 +1,57 @@
 package io.github.randommcsomethin.craftycuisine;
 
+import io.github.randommcsomethin.craftycuisine.config.CraftyCuisineConfig;
 import io.github.randommcsomethin.craftycuisine.effect.AntidoteEffect;
 import io.github.randommcsomethin.craftycuisine.effect.MagnetismEffect;
 import io.github.randommcsomethin.craftycuisine.effect.SweetToothEffect;
+import io.github.randommcsomethin.craftycuisine.event.EntityAttackingEntityCallback;
 import io.github.randommcsomethin.craftycuisine.item.*;
+import io.github.randommcsomethin.craftycuisine.mixin.FoodComponentAccessor;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.minecraft.block.Portal;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.component.type.FoodComponents;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ChorusFruitItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.Items;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.*;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.stat.Stat;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.village.TradeOffer;
+import net.minecraft.village.TradedItem;
+import net.minecraft.village.VillagerProfession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class CraftyCuisine implements ModInitializer {
@@ -42,7 +63,7 @@ public class CraftyCuisine implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	// reused food components
-	public static final FoodComponent FROSTED_COOKIE_FOOD = new FoodComponent.Builder().nutrition(2).saturationModifier(0.25F).snack().build();
+	public static final FoodComponent FROSTED_COOKIE_FOOD = new FoodComponent.Builder().nutrition(2).saturationModifier(0.25F).build();
 
 	// status effects
 	public static final RegistryEntry<StatusEffect> SWEET_TOOTH_EFFECT = registerStatusEffect("sweet_tooth", new SweetToothEffect());
@@ -70,17 +91,22 @@ public class CraftyCuisine implements ModInitializer {
 			StatusEffects.WEAKNESS.value()
 	};
 
+	// config
+	public static CraftyCuisineConfig config;
+
 	// items
 	// cooked foods
 	public static final Item COOKED_CARROT = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(4).saturationModifier(1).build())), "cooked_carrot");
 	public static final Item COOKED_BEETROOT = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(4).saturationModifier(1).build())), "cooked_beetroot");
 	public static final Item BAKED_APPLE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(5).saturationModifier(1).build())), "baked_apple");
-	public static final Item COOKED_BROWN_MUSHROOM = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().snack().nutrition(1).saturationModifier(1).build())), "cooked_brown_mushroom");
-	public static final Item COOKED_RED_MUSHROOM = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().snack().nutrition(2).saturationModifier(0.5F).build())), "cooked_red_mushroom");
-	public static final Item COOKED_EGG = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().snack().nutrition(1).saturationModifier(0.3F).build())), "cooked_egg");
+	public static final Item COOKED_BROWN_MUSHROOM = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(1).saturationModifier(1).build())), "cooked_brown_mushroom");
+	public static final Item COOKED_RED_MUSHROOM = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(2).saturationModifier(0.5F).build())), "cooked_red_mushroom");
+	public static final Item COOKED_EGG = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(1).saturationModifier(0.3F).build())), "cooked_egg");
+	public static final Item COOKED_TURTLE_EGG = registerItem(new TooltippedItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(5).saturationModifier(0.3F).build()),
+			List.of(Text.translatable("item.craftycuisine.cooked_turtle_egg_tooltip").formatted(Formatting.GRAY))), "cooked_turtle_egg");
 	// bacon
-	public static final Item RAW_BACON = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(1).saturationModifier(0.2F).snack().build())), "bacon");
-	public static final Item COOKED_BACON = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(3).saturationModifier(0.8F).snack().build())), "cooked_bacon");
+	public static final Item RAW_BACON = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(1).saturationModifier(0.2F).build())), "bacon");
+	public static final Item COOKED_BACON = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(3).saturationModifier(0.8F).build())), "cooked_bacon");
 	// monster foods
 	public static final Item COOKED_SPIDER_EYE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(3).saturationModifier(1.2F).build())), "cooked_spider_eye");
 	public static final Item MONSTER_MEATBALLS = registerItem(new Item(new Item.Settings()
@@ -89,7 +115,7 @@ public class CraftyCuisine implements ModInitializer {
 			.food(new FoodComponent.Builder().nutrition(3).saturationModifier(1.2F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 300), 1.0F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 300), 1.0F)
-			.statusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 300), 1.0F).build()), List.of(Text.translatable("item.craftycuisine.monster_manicotti_tooltip").formatted(Formatting.WHITE))), "monster_manicotti");
+			.statusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 300), 1.0F).build()), List.of(Text.translatable("item.craftycuisine.monster_manicotti_tooltip").formatted(Formatting.GRAY))), "monster_manicotti");
 
 	// fish
 	public static final Item SUSHI = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(10).saturationModifier(0.5F).build())), "sushi");
@@ -97,14 +123,19 @@ public class CraftyCuisine implements ModInitializer {
 					.statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 600), 1.0F).build())), "salmon_cakes");
 	// candy
 	public static final Item CANDIED_APPLE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(1)
-			.usingConvertsTo(Items.STICK).build())), "candied_apple");
+			.usingConvertsTo(Items.STICK).build())
+			.maxCount(16)), "candied_apple");
 	public static final Item CANDIED_CHORUS_FRUIT = registerItem(new ChorusFruitItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(1)
-			.usingConvertsTo(Items.STICK).build())), "candied_chorus_fruit");
+			.usingConvertsTo(Items.STICK).build())
+			.maxCount(16)), "candied_chorus_fruit");
 	public static final Item CANDIED_MELON_SLICE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(1)
-			.usingConvertsTo(Items.STICK).build())), "candied_melon_slice");
+			.usingConvertsTo(Items.STICK).build())
+			.maxCount(16)), "candied_melon_slice");
 	public static final Item SWEET_BERRY_CANDY = registerItem(new DrinkableItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(10).saturationModifier(1.2F)
 			.statusEffect(new StatusEffectInstance(SWEET_TOOTH_EFFECT, 600, 1), 1.0F)
-			.usingConvertsTo(Items.GLASS_BOTTLE).build()).recipeRemainder(Items.GLASS_BOTTLE)), "sweet_berry_candy");
+			.usingConvertsTo(Items.GLASS_BOTTLE).build())
+			.maxCount(16)
+			.recipeRemainder(Items.GLASS_BOTTLE)), "sweet_berry_candy");
 	// jams and breads
 	public static final Item SWEET_BERRY_JAM = registerItem(new DrinkableItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.15F)
 			.usingConvertsTo(Items.GLASS_BOTTLE)
@@ -124,8 +155,8 @@ public class CraftyCuisine implements ModInitializer {
 	// cookies
 	public static final Item SUGAR_COOKIE = registerItem(new Item(new Item.Settings().food(FoodComponents.COOKIE)), "sugar_cookie");
 	public static final Item FROSTED_SUGAR_COOKIE = registerItem(new Item(new Item.Settings().food(FROSTED_COOKIE_FOOD)), "frosted_sugar_cookie");
-	public static final Item PUMPKIN_COOKIE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(3).saturationModifier(0.4F).snack().build())), "pumpkin_cookie");
-	public static final Item FROSTED_PUMPKIN_COOKIE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(4).saturationModifier(0.4F).snack().build())), "frosted_pumpkin_cookie");
+	public static final Item PUMPKIN_COOKIE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(3).saturationModifier(0.4F).build())), "pumpkin_cookie");
+	public static final Item FROSTED_PUMPKIN_COOKIE = registerItem(new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(4).saturationModifier(0.4F).build())), "frosted_pumpkin_cookie");
 	public static final Item SUGAR_COOKIE_SQUARE = registerSugarCookie("square", false);
 	public static final Item FROSTED_SUGAR_COOKIE_SQUARE = registerSugarCookie("square", true);
 	public static final Item SUGAR_COOKIE_STAR = registerSugarCookie("star", false);
@@ -236,17 +267,44 @@ public class CraftyCuisine implements ModInitializer {
 					.statusEffect(new StatusEffectInstance(ANTIDOTE_EFFECT, 2400, 1), 1.0F).build())
 			.maxCount(1)), "honey_flan");
 
+	// sounds
+	public static final SoundEvent LIFESTEAL = Registry.register(Registries.SOUND_EVENT, Identifier.of(MOD_ID, "lifesteal"),
+			SoundEvent.of(Identifier.of(MOD_ID, "lifesteal")));
+	//
+
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+		// config
+		AutoConfig.register(CraftyCuisineConfig.class, GsonConfigSerializer::new);
+		config = AutoConfig.getConfigHolder(CraftyCuisineConfig.class).getConfig();
+
+		// sweet tooth logic
+		EntityAttackingEntityCallback.EVENT.register((attacker, target) -> {
+			// only from living entities
+			if (!(attacker instanceof LivingEntity)) return ActionResult.PASS;
+			StatusEffectInstance sweetTooth = ((LivingEntity) attacker).getStatusEffect(SWEET_TOOTH_EFFECT);
+			if (sweetTooth != null && !attacker.getWorld().isClient()) {
+				if (((LivingEntity) target).hurtTime > 0) return ActionResult.PASS;
+				if (target instanceof LivingEntity && !target.getType().isIn(TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CraftyCuisine.MOD_ID, "cannot_activate_sweet_tooth")))) {
+					((LivingEntity) attacker).heal(2.0F + sweetTooth.getAmplifier());
+					attacker.getWorld().playSound(null, attacker.getBlockPos(), CraftyCuisine.LIFESTEAL, SoundCategory.PLAYERS, 0.75f, (float) (Math.random()/10f + 0.9f));
+					((ServerWorld) attacker.getWorld()).spawnParticles(
+							ParticleTypes.HEART,
+							target.getX(), target.getRandomBodyY(), target.getZ(),
+							(2 + sweetTooth.getAmplifier())/2,
+							0.1, 0, 0.1,
+							0.2
+					);
+				}
+			}
+            return ActionResult.PASS;
+        });
 
 		// tem groups
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register((itemGroup -> {
 			itemGroup.addAfter(Items.CARROT, COOKED_CARROT);
 			itemGroup.addAfter(Items.APPLE, BAKED_APPLE);
-			itemGroup.addAfter(Items.BEETROOT, COOKED_BEETROOT, COOKED_EGG, COOKED_BROWN_MUSHROOM, COOKED_RED_MUSHROOM);
+			itemGroup.addAfter(Items.BEETROOT, COOKED_BEETROOT, COOKED_EGG, COOKED_TURTLE_EGG, COOKED_BROWN_MUSHROOM, COOKED_RED_MUSHROOM);
 			itemGroup.addAfter(Items.HONEY_BOTTLE, SWEET_BERRY_JAM, GLOW_BERRY_JAM);
 			itemGroup.addAfter(Items.BREAD, SWEET_BERRY_BREAD, GLOW_BERRY_BREAD, HONEY_BREAD);
 			itemGroup.addAfter(Items.COOKED_MUTTON, SHEPHERDS_PIE);
@@ -283,6 +341,46 @@ public class CraftyCuisine implements ModInitializer {
 					COOKIE_CUTTER_SHAMROCK,
 					COOKIE_CUTTER_EGG);
 		}));
+
+		for (String s : config.fastFood) {
+			try {
+				Item i = Registries.ITEM.get(Identifier.of(s));
+				if (i.getComponents().contains(DataComponentTypes.FOOD)) {
+					((FoodComponentAccessor) (Object) Objects.requireNonNull(i.getComponents().get(DataComponentTypes.FOOD))).setEatSeconds(0.8F);
+                    LOGGER.debug("Registered food item {}", s);
+				} else {
+					LOGGER.error("Something went wrong with item " + s + "!  It's not an item or doesn't have a food component.");
+				}
+			} catch (Exception e) {
+				LOGGER.error("Something went wrong with item " + s + "!  It's not an item or doesn't have a food component.");
+			}
+		}
+
+
+
+		DefaultItemComponentEvents.MODIFY.register(modifyContext -> {
+			for (String s : config.stews) {
+				try {
+					Item i = Registries.ITEM.get(Identifier.of(s));
+					modifyContext.modify(i, builder -> {
+						builder.add(DataComponentTypes.MAX_STACK_SIZE, config.stewStackSize);
+					});
+					LOGGER.debug("Registered stew item {}", s);
+				} catch (Exception e) {
+					LOGGER.error("Something went wrong with item " + s + "!");
+				}
+			}
+		});
+
+
+		// trades
+		if (config.fishSoupTrade) {
+			TradeOfferHelper.registerVillagerOffers(VillagerProfession.FISHERMAN, 4,
+					factories -> {
+						factories.add((entity, random) -> new TradeOffer(new TradedItem(Items.EMERALD, 1), new ItemStack(FISH_SOUP, 1), 16, 3, 0.05f));
+					});
+		}
+
 		LOGGER.info("Hello Fabric world!");
 	}
 
@@ -315,6 +413,6 @@ public class CraftyCuisine implements ModInitializer {
 			food = FROSTED_COOKIE_FOOD;
 		}
 
-		return registerItem(new TooltippedItem(new Item.Settings().food(food), List.of(Text.translatable("item.craftycuisine.".concat(cookieName).concat("_tooltip")).formatted(Formatting.AQUA))), cookieName);
+		return registerItem(new TooltippedItem(new Item.Settings().food(food), List.of(Text.translatable("item.craftycuisine.".concat(cookieName).concat("_tooltip")).formatted(Formatting.GRAY))), cookieName);
 	}
 }

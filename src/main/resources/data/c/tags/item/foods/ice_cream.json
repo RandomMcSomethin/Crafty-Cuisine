@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "craftycuisine:ice_cream",
+    "craftycuisine:pumpkin_ice_cream",
+    "craftycuisine:apple_ice_cream",
+    "craftycuisine:chocolate_ice_cream",
+    "craftycuisine:chorus_ice_cream",
+    "craftycuisine:melon_ice_cream",
+    "craftycuisine:sweet_berry_ice_cream",
+    "craftycuisine:glow_berry_ice_cream",
+    "craftycuisine:honey_ice_cream"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "lifesteal": {
+    "subtitle": "sound.craftycuisine.lifesteal",
+    "sounds": ["craftycuisine:lifesteal"]
+  }
+}
